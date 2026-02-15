@@ -1,0 +1,575 @@
+@import "tailwindcss";
+
+@theme {
+  /* Tableau Desktop Authentic Colors (from screenshot) */
+  --color-tab-blue: #4e79a7;
+  --color-tab-green: #59a14f;
+  --color-tab-purple: #b07aa1;
+  --color-tab-orange: #e8832a;
+  --color-tab-red: #e15759;
+  --color-tab-teal: #76b7b2;
+
+  /* Tableau workspace surfaces - matched from screenshot */
+  --color-tab-bg: #e8e8e8;
+  --color-tab-surface: #ffffff;
+  --color-tab-shelf: #f5f5f5;
+  --color-tab-shelf-border: #c0c0c0;
+  --color-tab-toolbar: #f0f0f0;
+  --color-tab-toolbar-border: #c8c8c8;
+  --color-tab-pane-bg: #f9f9f9;
+  --color-tab-text: #333333;
+  --color-tab-text-dim: #666666;
+  --color-tab-text-muted: #999999;
+  --color-tab-divider: #d4d4d4;
+  --color-tab-accent: #2c6fbb;
+  --color-tab-highlight: #daeaf7;
+  --color-tab-pill-blue: #6e95be;
+  --color-tab-pill-green: #6db368;
+  --color-tab-dim-text: #4e79a7;
+  --color-tab-meas-text: #59a14f;
+  --color-tab-sheet-active: #ffffff;
+  --color-tab-sheet-inactive: #e0e0e0;
+
+  /* Game dark theme (story/quiz/menus) */
+  --color-bg-primary: #080e1a;
+  --color-bg-secondary: #111d30;
+  --color-bg-card: #182742;
+  --color-bg-elevated: #1e3352;
+  --color-text-primary: #e8edf5;
+  --color-text-secondary: #8899b0;
+  --color-text-dim: #56677d;
+  --color-accent: #5b8df0;
+  --color-accent-glow: #3d6fdf;
+  --color-accent-soft: #5b8df020;
+
+  /* Gauge colors */
+  --color-gauge-high: #48A868;
+  --color-gauge-mid: #F28E2B;
+  --color-gauge-low: #e15759;
+
+  --font-sans: 'Pretendard', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --font-tab: 'Segoe UI', 'Malgun Gothic', system-ui, sans-serif;
+
+  --animate-fade-in: fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-up: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-bounce-in: bounce-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --animate-glow-pulse: glow-pulse 2s ease-in-out infinite;
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes bounce-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(91, 141, 240, 0.15); }
+  50% { box-shadow: 0 0 24px rgba(91, 141, 240, 0.4); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes typing-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ===== TABLEAU WORKSPACE ===== */
+.tableau-workspace {
+  font-family: var(--font-tab);
+}
+
+/* Data pane field item (like real Tableau - text row, not pill) */
+.tab-field-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px 2px 4px;
+  font-size: 11px;
+  color: var(--color-tab-text);
+  cursor: grab;
+  user-select: none;
+  border-radius: 2px;
+  transition: background 0.1s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tab-field-item:hover {
+  background: var(--color-tab-highlight);
+}
+.tab-field-item:active {
+  cursor: grabbing;
+}
+.tab-field-item-selected {
+  background: var(--color-tab-accent);
+  color: white;
+}
+
+/* Tableau pill (in shelves after dropping) */
+.tab-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 8px 1px 6px;
+  border-radius: 2px;
+  font-size: 11px;
+  font-weight: normal;
+  color: white;
+  white-space: nowrap;
+  cursor: default;
+  user-select: none;
+  position: relative;
+}
+.tab-pill-dim {
+  background: var(--color-tab-pill-blue);
+}
+.tab-pill-meas {
+  background: var(--color-tab-pill-green);
+}
+.tab-pill-agg {
+  background: var(--color-tab-orange);
+}
+.tab-pill .pill-remove {
+  margin-left: 2px;
+  opacity: 0;
+  font-size: 10px;
+  cursor: pointer;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+.tab-pill:hover .pill-remove {
+  opacity: 0.7;
+}
+.tab-pill .pill-remove:hover {
+  opacity: 1;
+  background: rgba(0,0,0,0.15);
+}
+
+/* Drag overlay pill */
+.tab-drag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 10px 2px 6px;
+  border-radius: 2px;
+  font-size: 11px;
+  color: white;
+  white-space: nowrap;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  pointer-events: none;
+}
+
+/* Tableau shelf (열/행) */
+.tab-shelf {
+  min-height: 24px;
+  padding: 2px 4px;
+  background: var(--color-tab-shelf);
+  border: 1px solid var(--color-tab-shelf-border);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  transition: all 0.15s;
+}
+.tab-shelf-active {
+  background: #d4e8ff;
+  border-color: var(--color-tab-accent);
+}
+.tab-shelf-invalid {
+  background: #ffe0e0;
+  border-color: var(--color-tab-red);
+  animation: shelf-shake 0.3s;
+}
+@keyframes shelf-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+
+/* Marks card property button (색상, 크기, 레이블 etc) */
+.marks-prop-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 4px;
+  font-size: 10px;
+  color: var(--color-tab-text-dim);
+  cursor: pointer;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  transition: all 0.1s;
+  min-height: 22px;
+}
+.marks-prop-btn:hover {
+  background: var(--color-tab-highlight);
+  border-color: var(--color-tab-shelf-border);
+}
+.marks-prop-drop {
+  min-height: 22px;
+  padding: 2px 4px;
+  border: 1px solid var(--color-tab-shelf-border);
+  border-radius: 2px;
+  background: var(--color-tab-shelf);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s;
+}
+.marks-prop-drop-active {
+  background: #d4e8ff;
+  border-color: var(--color-tab-accent);
+}
+
+/* Sheet tabs at bottom */
+.tab-sheet-tab {
+  padding: 3px 12px;
+  font-size: 10px;
+  background: var(--color-tab-sheet-inactive);
+  border: 1px solid var(--color-tab-shelf-border);
+  border-bottom: none;
+  border-radius: 0 0 0 0;
+  cursor: default;
+  color: var(--color-tab-text-dim);
+  position: relative;
+  bottom: -1px;
+}
+.tab-sheet-tab-active {
+  background: var(--color-tab-sheet-active);
+  color: var(--color-tab-text);
+  font-weight: 600;
+  border-bottom: 1px solid white;
+}
+
+/* ===== GAME UI ===== */
+
+/* Visual novel dialogue box */
+.dialogue-box {
+  position: relative;
+  background: linear-gradient(135deg, rgba(17, 29, 48, 0.95), rgba(24, 39, 66, 0.9));
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(91, 141, 240, 0.15);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.dialogue-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(91, 141, 240, 0.3), transparent);
+}
+
+.character-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.quiz-option {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.quiz-option::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(91, 141, 240, 0.03));
+  pointer-events: none;
+}
+.quiz-option:hover:not(:disabled) {
+  transform: translateX(4px);
+}
+
+.gauge-track {
+  position: relative;
+  height: 10px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.gauge-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+.gauge-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, transparent 50%, rgba(0,0,0,0.1) 100%);
+  border-radius: 5px;
+}
+
+.choice-btn {
+  position: relative;
+  overflow: hidden;
+}
+.choice-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(91, 141, 240, 0.08), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.choice-btn:hover::after {
+  opacity: 1;
+}
+
+.title-gradient {
+  background: linear-gradient(135deg, #5b8df0 0%, #7c5bf0 30%, #5b8df0 60%, #48A868 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+.tableau-workspace ::-webkit-scrollbar { width: 8px; height: 8px; }
+.tableau-workspace ::-webkit-scrollbar-track { background: var(--color-tab-toolbar); }
+.tableau-workspace ::-webkit-scrollbar-thumb { background: #c0c0c0; border-radius: 0; border: 1px solid var(--color-tab-toolbar); }
+.tableau-workspace ::-webkit-scrollbar-thumb:hover { background: #a0a0a0; }
+
+/* ===== VISUAL NOVEL ENGINE ===== */
+.vn-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  user-select: none;
+}
+
+.vn-background {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.vn-background-dark {
+  background: linear-gradient(135deg, #080e1a 0%, #111d30 50%, #0a1628 100%);
+}
+
+.vn-background::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 40%, rgba(0, 0, 0, 0.75));
+}
+
+/* Character sprite */
+.character-sprite {
+  position: absolute;
+  bottom: 0;
+  height: 80vh;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+.character-sprite.left {
+  left: 5%;
+}
+.character-sprite.right {
+  right: 5%;
+}
+.character-sprite.center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.character-sprite.inactive {
+  filter: brightness(0.55) grayscale(0.3);
+}
+.character-sprite img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+@keyframes sprite-enter {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.sprite-enter {
+  animation: sprite-enter 0.4s ease-out;
+}
+
+/* Dialogue container */
+.vn-dialogue-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0 16px 24px;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.vn-dialogue-box {
+  max-width: 800px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, rgba(10, 18, 32, 0.92), rgba(17, 29, 48, 0.88));
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(91, 141, 240, 0.12);
+  border-radius: 16px;
+  padding: 20px 24px 16px;
+  position: relative;
+}
+.vn-dialogue-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(91, 141, 240, 0.25), transparent);
+}
+
+.vn-speaker-name {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: 0.02em;
+}
+
+.vn-dialogue-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #e8edf5;
+  min-height: 48px;
+}
+.vn-dialogue-text.narrator {
+  font-style: italic;
+  color: #8899b0;
+}
+
+.vn-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 16px;
+  background: #5b8df0;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: typing-cursor 0.8s step-end infinite;
+}
+
+.vn-dialogue-hint {
+  text-align: right;
+  font-size: 12px;
+  color: rgba(91, 141, 240, 0.4);
+  margin-top: 4px;
+  height: 16px;
+}
+
+/* Choice buttons */
+.vn-choices-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.vn-choices-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 480px;
+  padding: 0 24px;
+}
+
+.vn-choice-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(17, 29, 48, 0.95), rgba(24, 39, 66, 0.9));
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(91, 141, 240, 0.15);
+  border-radius: 12px;
+  color: #e8edf5;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+.vn-choice-btn:hover {
+  background: linear-gradient(135deg, rgba(24, 39, 66, 0.95), rgba(30, 51, 82, 0.9));
+  border-color: rgba(91, 141, 240, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(91, 141, 240, 0.1);
+}
+
+.vn-choice-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(91, 141, 240, 0.15);
+  color: #5b8df0;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.vn-choice-text {
+  flex: 1;
+  font-weight: 500;
+}
