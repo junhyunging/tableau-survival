@@ -14,10 +14,21 @@ const PILL_BG = {
   chartType: '#b07aa1',
 }
 
+const AUTO_BLOCK = { id: 'auto', name: '자동', type: 'chartType' }
+
 const CHART_TYPES = [
-  { id: 'bar', label: '막대', icon: '📊' },
-  { id: 'line', label: '라인', icon: '📈' },
-  { id: 'pie', label: '파이', icon: '🥧' },
+  { id: 'auto', label: '자동' },
+  { id: 'bar', label: '막대' },
+  { id: 'line', label: '라인' },
+  { id: 'pie', label: '파이' },
+]
+
+const MARK_PROPERTIES = [
+  { slotId: 'colorBy', label: '색상', icon: '●', iconColor: '#4e79a7' },
+  { slotId: 'sizeBy', label: '크기', icon: '◐', iconColor: '#666' },
+  { slotId: 'labelBy', label: '레이블', icon: 'T', iconColor: '#666' },
+  { slotId: 'detailBy', label: '세부 정보', icon: '⊞', iconColor: '#666' },
+  { slotId: 'tooltipBy', label: '도구 설명', icon: '≡', iconColor: '#666' },
 ]
 
 export default function BlockWorkspace({ problem, onComplete }) {
@@ -28,14 +39,13 @@ export default function BlockWorkspace({ problem, onComplete }) {
   const [submitted, setSubmitted] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
   const [showHint, setShowHint] = useState(false)
+  const [markSize, setMarkSize] = useState(50)
+  const [showSizeSlider, setShowSizeSlider] = useState(false)
 
-  // Auto-select bar chart on mount
+  // Default to "자동" chart type on mount
   useEffect(() => {
-    const barBlock = problem.availableBlocks.chartTypes.find((b) => b.id === 'bar')
-    if (barBlock) {
-      setFilledSlots((prev) => ({ ...prev, chartType: barBlock }))
-    }
-  }, [problem.availableBlocks.chartTypes])
+    setFilledSlots((prev) => ({ ...prev, chartType: AUTO_BLOCK }))
+  }, [])
 
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }))
 
@@ -76,13 +86,16 @@ export default function BlockWorkspace({ problem, onComplete }) {
   }, [])
 
   const handleChartTypeSelect = (chartId) => {
+    if (chartId === 'auto') {
+      setFilledSlots((prev) => ({ ...prev, chartType: AUTO_BLOCK }))
+      return
+    }
     const block = problem.availableBlocks.chartTypes.find((b) => b.id === chartId)
     if (block) setFilledSlots((prev) => ({ ...prev, chartType: block }))
   }
 
   const handleReset = () => {
-    const barBlock = problem.availableBlocks.chartTypes.find((b) => b.id === 'bar')
-    setFilledSlots(barBlock ? { chartType: barBlock } : {})
+    setFilledSlots({ chartType: AUTO_BLOCK })
     setSubmitted(false)
     setIsCorrect(false)
   }
@@ -91,8 +104,8 @@ export default function BlockWorkspace({ problem, onComplete }) {
     const result = checkBlockAnswer(problem, blockState)
     setIsCorrect(result.isCorrect)
     setSubmitted(true)
-    if (result.isCorrect) dispatch({ type: 'ANSWER_CORRECT', payload: problem.id })
-    else dispatch({ type: 'ANSWER_INCORRECT' })
+    if (result.isCorrect) dispatch({ type: 'ANSWER_CORRECT', payload: { problemId: problem.id } })
+    else dispatch({ type: 'ANSWER_INCORRECT', payload: { problemId: problem.id } })
   }
 
   const getSlot = (id) => problem.slots.find((s) => s.id === id)
@@ -130,12 +143,7 @@ export default function BlockWorkspace({ problem, onComplete }) {
               <rect x="1" y="8" width="5" height="5" rx="0.5" fill="#e8832a" />
               <rect x="8" y="8" width="5" height="5" rx="0.5" fill="#b07aa1" />
             </svg>
-            <div className="flex items-center gap-0.5 ml-2">
-              {['↩', '↪'].map((icon, i) => (
-                <span key={i} className="w-6 h-6 flex items-center justify-center text-[11px] text-[#888] rounded hover:bg-[#ddd] cursor-default">{icon}</span>
-              ))}
-            </div>
-            <div className="w-px h-4 bg-[#ccc] mx-1" />
+            <div className="w-px h-4 bg-[#ccc] mx-2" />
             <div className="flex items-center gap-0.5 px-2 py-0.5 bg-white border border-[#bbb] rounded-sm">
               <span className="text-[10px] text-[#444]">전체 보기</span>
               <span className="text-[9px] text-[#999]">▾</span>
@@ -157,11 +165,6 @@ export default function BlockWorkspace({ problem, onComplete }) {
 
             {/* ── Right: Shelves + Viz area ── */}
             <div className="flex-1 flex flex-col bg-[#e8e8e8] min-w-0">
-
-              {/* 페이지 shelf */}
-              <div className="flex items-center h-[22px] bg-[#f0f0f0] border-b border-[#c8c8c8]">
-                <span className="text-[10px] text-[#999] px-2 select-none">페이지</span>
-              </div>
 
               {/* 열 (Columns) shelf */}
               <div className="bg-[#f0f0f0] border-b border-[#c8c8c8] py-0.5 px-0">
@@ -211,14 +214,14 @@ export default function BlockWorkspace({ problem, onComplete }) {
                     <span className="text-[10px] text-[#666] bg-white px-2 py-0.5 border border-[#c0c0c0] rounded-sm inline-block">전체</span>
                   </div>
 
-                  {/* Chart type selector */}
+                  {/* Chart type selector — 자동 / 막대 / 라인 / 파이 */}
                   <div className="px-2.5 py-1.5 border-b border-[#d4d4d4]">
                     <div className="flex items-center gap-1.5 bg-white border border-[#b0b0b0] px-2 py-1 rounded-sm">
                       <svg width="10" height="10" viewBox="0 0 10 10" fill="#555">
                         <rect x="0" y="2" width="3" height="8" /><rect x="4" y="0" width="3" height="10" /><rect x="8" y="4" width="2" height="6" />
                       </svg>
                       <select
-                        value={filledSlots.chartType?.id || 'bar'}
+                        value={filledSlots.chartType?.id || 'auto'}
                         onChange={(e) => handleChartTypeSelect(e.target.value)}
                         className="text-[11px] text-[#333] bg-transparent border-none outline-none flex-1 cursor-pointer appearance-none font-medium"
                       >
@@ -230,48 +233,70 @@ export default function BlockWorkspace({ problem, onComplete }) {
                     </div>
                   </div>
 
-                  {/* Mark properties - row 1: 색상, 크기, 레이블 */}
-                  <div className="px-2 py-1.5 border-b border-[#d4d4d4]">
-                    <div className="grid grid-cols-3 gap-1">
-                      {[
-                        { icon: '●', label: '색상', color: '#4e79a7' },
-                        { icon: '◐', label: '크기', color: '#666' },
-                        { icon: 'T', label: '레이블', color: '#666' },
-                      ].map((prop) => (
-                        <div key={prop.label} className="flex flex-col items-center py-1.5 px-1 rounded hover:bg-[#daeaf7] cursor-default border border-transparent hover:border-[#c0c0c0] transition-colors">
-                          <span className="text-[13px] leading-none" style={{ color: prop.color }}>{prop.icon}</span>
-                          <span className="text-[9px] text-[#666] mt-1">{prop.label}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="grid grid-cols-2 gap-1 mt-1">
-                      {[
-                        { icon: '⊞', label: '세부 정보' },
-                        { icon: '📝', label: '도구 설명' },
-                      ].map((prop) => (
-                        <div key={prop.label} className="flex items-center gap-1.5 py-1.5 px-2 rounded hover:bg-[#daeaf7] cursor-default border border-transparent hover:border-[#c0c0c0] transition-colors">
-                          <span className="text-[11px] text-[#666]">{prop.icon}</span>
-                          <span className="text-[9px] text-[#666]">{prop.label}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Droppable mark slots */}
+                  {/* Mark property cards — 3+2 grid like real Tableau */}
                   <div className="px-2 py-2 flex flex-col gap-1.5 flex-1">
-                    <DroppableSlot
-                      slot={{ ...getSlot('colorBy'), label: '색상', icon: '●' }}
-                      filledBlock={filledSlots.colorBy || null}
-                      onRemove={handleRemove}
-                      isInvalidDrop={invalidSlotId === 'colorBy'}
-                      layout="marks"
-                    />
+                    {/* Top row: 색상, 크기, 레이블 */}
+                    <div className="grid grid-cols-3 gap-1">
+                      {MARK_PROPERTIES.slice(0, 3).map(({ slotId, label, icon, iconColor }) => {
+                        const slot = getSlot(slotId)
+                        if (!slot) return null
+                        return (
+                          <DroppableSlot
+                            key={slotId}
+                            slot={{ ...slot, label, icon, iconColor }}
+                            filledBlock={filledSlots[slotId] || null}
+                            onRemove={handleRemove}
+                            isInvalidDrop={invalidSlotId === slotId}
+                            layout="card"
+                            onClick={slotId === 'sizeBy' ? () => setShowSizeSlider((v) => !v) : undefined}
+                          />
+                        )
+                      })}
+                    </div>
+                    {/* Size slider popup */}
+                    {showSizeSlider && (
+                      <div className="bg-white border border-[#c0c0c0] rounded-sm p-2 shadow-sm">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-[9px] text-[#666]">크기</span>
+                          <span className="text-[9px] text-[#999]">{markSize}%</span>
+                        </div>
+                        <input
+                          type="range"
+                          min={10}
+                          max={100}
+                          value={markSize}
+                          onChange={(e) => setMarkSize(Number(e.target.value))}
+                          className="w-full h-1 accent-[#4e79a7] cursor-pointer"
+                        />
+                        <div className="flex justify-between text-[8px] text-[#aaa] mt-0.5">
+                          <span>작게</span>
+                          <span>크게</span>
+                        </div>
+                      </div>
+                    )}
+                    {/* Bottom row: 세부 정보, 도구 설명 */}
+                    <div className="grid grid-cols-2 gap-1">
+                      {MARK_PROPERTIES.slice(3).map(({ slotId, label, icon, iconColor }) => {
+                        const slot = getSlot(slotId)
+                        if (!slot) return null
+                        return (
+                          <DroppableSlot
+                            key={slotId}
+                            slot={{ ...slot, label, icon, iconColor }}
+                            filledBlock={filledSlots[slotId] || null}
+                            onRemove={handleRemove}
+                            isInvalidDrop={invalidSlotId === slotId}
+                            layout="card"
+                          />
+                        )
+                      })}
+                    </div>
                   </div>
                 </div>
 
                 {/* ── Visualization canvas ── */}
                 <div className="flex-1 min-w-0">
-                  <ChartPreview chartResult={chartResult} />
+                  <ChartPreview chartResult={chartResult} markSize={markSize} />
                 </div>
               </div>
             </div>
@@ -280,10 +305,6 @@ export default function BlockWorkspace({ problem, onComplete }) {
           {/* ── Sheet tabs (bottom) ── */}
           <div className="h-[26px] bg-[#e8e8e8] border-t border-[#c0c0c0] flex items-end px-1">
             <div className="tab-sheet-tab tab-sheet-tab-active">시트 1</div>
-            <div className="tab-sheet-tab">시트 2</div>
-            <div className="tab-sheet-tab flex items-center justify-center !px-2 text-[#999] hover:text-[#333]">
-              <span className="text-[12px]">+</span>
-            </div>
           </div>
         </div>
 

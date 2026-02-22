@@ -54,6 +54,8 @@ export const BACKGROUNDS = {
   presentation: '/images/backgrounds/bg_presentation.jpg',
   rooftop: '/images/backgrounds/bg_rooftop.jpg',
   night_walk: '/images/backgrounds/bg_night_walk.jpg',
+  promotion: '/images/backgrounds/bg_promotion.jpeg',
+  ending_credits: '/images/backgrounds/bg_ending_credits.jpeg',
 }
 
 export function getPartnerCharacter(gender) {

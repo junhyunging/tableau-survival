@@ -3,6 +3,9 @@ export const TABLEAU_COLORS = [
   '#EDC948', '#B07AA1', '#FF9DA7', '#9C755F', '#BAB0AC',
 ]
 
+// Sequential color ramp for measure-on-color (Tableau blue-teal)
+export const TABLEAU_SEQUENTIAL = ['#c6dbef', '#9ecae1', '#6baed6', '#4292c6', '#2171b5', '#084594']
+
 function groupBy(arr, key) {
   return arr.reduce((acc, item) => {
     const k = item[key]
@@ -33,7 +36,10 @@ export function aggregate(rows, field, method) {
 }
 
 export function computeChartData(sampleData, blockState) {
-  const { chartType, xAxis, yAxis, colorBy, aggregation = 'SUM', filter } = blockState
+  const { chartType: rawChartType, xAxis, yAxis, colorBy, labelBy, aggregation = 'SUM', filter } = blockState
+
+  // "자동" (auto) behaves as bar chart
+  const chartType = rawChartType === 'auto' ? 'bar' : rawChartType
 
   // Filter
   let filtered = sampleData
@@ -46,7 +52,7 @@ export function computeChartData(sampleData, blockState) {
     return { status: 'empty', message: '블록을 슬롯에 끼워보세요!' }
   }
 
-  if (!chartType) {
+  if (!rawChartType) {
     return { status: 'partial', message: '차트 종류를 먼저 선택해주세요.' }
   }
 
@@ -55,11 +61,11 @@ export function computeChartData(sampleData, blockState) {
   }
 
   // Determine which field is the dimension (grouping) and which is the measure
-  const dimensionFields = ['category', 'region', 'segment', 'month', 'customer']
+  const dimensionFields = ['category', 'region', 'segment', 'month', 'customer', 'cohortWeek', 'cohortMonth']
+  const isDimensionColor = colorBy && dimensionFields.includes(colorBy)
+  const isMeasureColor = colorBy && !dimensionFields.includes(colorBy)
   let groupField, valueField
 
-  // orientation: 'vertical' = normal (dimension on 열/xAxis, measure on 행/yAxis)
-  //              'horizontal' = flipped (measure on 열/xAxis, dimension on 행/yAxis)
   let orientation = 'vertical'
 
   if (dimensionFields.includes(xAxis)) {
@@ -75,17 +81,42 @@ export function computeChartData(sampleData, blockState) {
     valueField = yAxis
   }
 
-  // Without color grouping
+  // Common: should we show value labels?
+  const showLabel = !!labelBy
+
+  // Pie charts
+  if (chartType === 'pie') {
+    const sliceField = (isDimensionColor && colorBy) || groupField
+    const grouped = groupBy(filtered, sliceField)
+    const chartData = Object.entries(grouped).map(([key, rows]) => ({
+      name: key,
+      value: aggregate(rows, valueField, aggregation),
+    }))
+    return { status: 'ready', data: chartData, series: ['value'], chartType: 'pie', colorByApplied: !!colorBy && isDimensionColor, orientation, showLabel }
+  }
+
+  // Without color
   if (!colorBy) {
     const grouped = groupBy(filtered, groupField)
     const chartData = Object.entries(grouped).map(([key, rows]) => ({
       name: key,
       value: aggregate(rows, valueField, aggregation),
     }))
-    return { status: 'ready', data: chartData, series: ['value'], chartType: chartType || 'bar', orientation }
+    return { status: 'ready', data: chartData, series: ['value'], chartType: chartType || 'bar', orientation, showLabel }
   }
 
-  // With color grouping
+  // Measure on color → gradient coloring
+  if (isMeasureColor) {
+    const grouped = groupBy(filtered, groupField)
+    const chartData = Object.entries(grouped).map(([key, rows]) => ({
+      name: key,
+      value: aggregate(rows, valueField, aggregation),
+      colorValue: aggregate(rows, colorBy, aggregation),
+    }))
+    return { status: 'ready', data: chartData, series: ['value'], chartType: chartType || 'bar', colorMeasure: colorBy, orientation, showLabel }
+  }
+
+  // Dimension on color → categorical grouping
   const colorValues = [...new Set(filtered.map((r) => r[colorBy]))]
   const grouped = groupBy(filtered, groupField)
   const chartData = Object.entries(grouped).map(([key, rows]) => {
@@ -97,11 +128,18 @@ export function computeChartData(sampleData, blockState) {
     return point
   })
 
-  return { status: 'ready', data: chartData, series: colorValues, chartType: chartType || 'bar', orientation }
+  return { status: 'ready', data: chartData, series: colorValues, chartType: chartType || 'bar', orientation, showLabel }
 }
 
 export function formatNumber(num) {
   if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`
   if (num >= 1000) return `${(num / 1000).toFixed(0)}K`
   return num.toString()
+}
+
+// Interpolate between sequential color ramp based on normalized value (0..1)
+export function getSequentialColor(t) {
+  const ramp = TABLEAU_SEQUENTIAL
+  const idx = Math.min(Math.floor(t * (ramp.length - 1)), ramp.length - 2)
+  return ramp[Math.min(idx + 1, ramp.length - 1)]
 }

@@ -3,16 +3,6 @@ import DraggableBlock from './DraggableBlock'
 export default function BlockPalette({ availableBlocks, dataSourceName }) {
   return (
     <div className="bg-white border-r border-[#c8c8c8] flex flex-col h-full overflow-hidden">
-      {/* Tabs: 데이터 | 분석 */}
-      <div className="flex border-b border-[#c8c8c8]">
-        <div className="flex-1 py-2 text-center text-[11px] font-semibold text-[#333] bg-white border-b-2 border-[#2c6fbb] cursor-default">
-          데이터
-        </div>
-        <div className="flex-1 py-2 text-center text-[11px] text-[#999] bg-[#f0f0f0] cursor-default">
-          분석
-        </div>
-      </div>
-
       {/* Data source */}
       <div className="px-3 py-2 border-b border-[#d4d4d4]">
         <div className="flex items-center gap-1.5">
@@ -23,17 +13,6 @@ export default function BlockPalette({ availableBlocks, dataSourceName }) {
             <rect x="7" y="7" width="4" height="4" rx="0.5" fill="#b07aa1" opacity="0.7" />
           </svg>
           <span className="text-[10px] text-[#666] truncate">{dataSourceName || '슈퍼스토어 (샘플)'}</span>
-        </div>
-      </div>
-
-      {/* Search bar */}
-      <div className="px-3 py-1.5 border-b border-[#d4d4d4]">
-        <div className="flex items-center bg-white border border-[#bbb] rounded-sm px-2 py-1">
-          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" className="shrink-0 mr-1.5">
-            <circle cx="5" cy="5" r="3.5" stroke="#999" strokeWidth="1.2" fill="none" />
-            <line x1="7.5" y1="7.5" x2="10" y2="10" stroke="#999" strokeWidth="1.2" />
-          </svg>
-          <span className="text-[10px] text-[#aaa]">검색</span>
         </div>
       </div>
 

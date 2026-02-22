@@ -159,9 +159,9 @@ export default function CharacterSetup() {
                 <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)', lineHeight: 1.6, margin: 0 }}>
                   <span style={{ color: '#5b8df0', fontWeight: 600 }}>멘토:</span> 박서연 팀장
                   <br />
-                  <span style={{ color: '#59a14f', fontWeight: 600 }}>조직:</span> 인사이트랩 데이터 시각화팀
+                  <span style={{ color: '#59a14f', fontWeight: 600 }}>조직:</span> 그로우랩 (GrowLab) 데이터팀
                   <br />
-                  <span style={{ color: '#e8832a', fontWeight: 600 }}>직무:</span> 수습 데이터 분석가 (5일 수습)
+                  <span style={{ color: '#e8832a', fontWeight: 600 }}>직무:</span> 수습 데이터 분석가 (20챕터 퀘스트)
                 </p>
               </div>
 

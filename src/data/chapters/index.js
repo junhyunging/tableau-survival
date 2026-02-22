@@ -1,7 +1,32 @@
 import { chapter1 } from './chapter1'
+import { chapter2 } from './chapter2'
+import { chapter3 } from './chapter3'
+import { chapter4 } from './chapter4'
+import { chapter5, chapter6, chapter7, chapter8, chapter9 } from './chapters5to9'
+import { chapter10, chapter11, chapter12, chapter13, chapter14, chapter15, chapter16 } from './chapters10to16'
+import { chapter17, chapter18, chapter19, chapter20 } from './chapters17to20'
 
 const chapters = {
   1: chapter1,
+  2: chapter2,
+  3: chapter3,
+  4: chapter4,
+  5: chapter5,
+  6: chapter6,
+  7: chapter7,
+  8: chapter8,
+  9: chapter9,
+  10: chapter10,
+  11: chapter11,
+  12: chapter12,
+  13: chapter13,
+  14: chapter14,
+  15: chapter15,
+  16: chapter16,
+  17: chapter17,
+  18: chapter18,
+  19: chapter19,
+  20: chapter20,
 }
 
 export const CHAPTER_META = [

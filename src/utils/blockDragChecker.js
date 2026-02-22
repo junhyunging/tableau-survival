@@ -1,12 +1,17 @@
+// Normalize chartType: "auto" is treated as "bar" for matching
+function normalizeSlot(slotId, value) {
+  if (slotId === 'chartType' && value === 'auto') return 'bar'
+  return value
+}
+
 export function checkBlockAnswer(problem, blockState) {
   const answers = [problem.correctAnswer, ...(problem.alternativeAnswers || [])]
 
   for (const answer of answers) {
     const match = Object.keys(answer).every((slotId) => {
       if (answer[slotId] === null || answer[slotId] === undefined) return true
-      // Aggregation is now automatic (SUM default), skip checking it
       if (slotId === 'aggregation') return true
-      return blockState[slotId] === answer[slotId]
+      return normalizeSlot(slotId, blockState[slotId]) === answer[slotId]
     })
     if (match) return { isCorrect: true }
   }
@@ -15,10 +20,9 @@ export function checkBlockAnswer(problem, blockState) {
 
 export function getProgress(problem, blockState) {
   const answer = problem.correctAnswer
-  // Filter out aggregation since it's automatic now
   const keys = Object.keys(answer).filter((k) => answer[k] != null && k !== 'aggregation')
   const total = keys.length
-  const matched = keys.filter((k) => blockState[k] === answer[k]).length
+  const matched = keys.filter((k) => normalizeSlot(k, blockState[k]) === answer[k]).length
   return {
     matched,
     total,

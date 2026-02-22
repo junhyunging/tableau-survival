@@ -1,9 +1,52 @@
-# Tableau Quest - Phase A 구현 핸드오프 문서
+# Tableau Quest - 핸드오프 문서
 
-## 현재 진행 상황
-- **코드 변경: 0** — 아직 코드를 하나도 수정/생성하지 않았음
-- 기존 코드 전체 분석 완료
-- 구현 계획 수립 및 태스크 리스트 생성 완료
+## 현재 구현 상황 (최종 업데이트)
+
+### ✅ 완료된 기능들
+
+#### CG 시스템
+- `src/components/common/CGViewer.jsx` — 풀스크린 CG 오버레이
+- CG 이미지: `/public/images/CG/` (umbrella/gift/nightwalk/confession × junhyung/sohee)
+- Ch11(우산), Ch13(선물), Ch19(야간산책), Ch20(고백) 이벤트에 CG 연결
+- CG 확인 시 `ADD_CG_SEEN` 액션 → 히든 칭호 잠금 해제 트리거
+
+#### 칭호(칭호) 시스템 — 25종
+- `src/data/titles.js` — 칭호 정의 + `checkTitleUnlocks(state)` 함수
+- 카테고리: ⭐별수집(5) | 🏆실력(4) | 📚파트클리어(5) | 💕호감도(5) | 🎮히든(5)
+- `TitleCollectionModal.jsx` — 칭호 모음함 UI (탭별 분류, 장착 기능)
+- ChapterSelect 헤더에 "🏆 칭호" 버튼 추가
+- 챕터 클리어 시 자동 체크 + 신규 칭호 알림 표시
+
+#### 레벨업 씬
+- ChapterClear.jsx: 레벨업 감지 → `LevelUpScene` 컴포넌트 표시
+- `bg_promotion.jpeg` 배경 사용, 탭하여 계속
+
+#### 엔딩 크레딧 배경
+- GameComplete.jsx: `bg_ending_credits.jpeg` 배경 페이드인
+
+#### Chapter 3 문제 수정
+- 뜬금없는 ABS(quiz_06) 제거 → 마크카드 관련 quiz_09, quiz_10으로 교체
+- `problems: ['block_03', 'quiz_09', 'quiz_10']`
+- bossChallenge: `block_04` (파이차트 세그먼트별 이익)
+
+#### 파이차트 자동 색상
+- `chartRenderer.js`: 파이차트는 colorBy 무시, 항상 `{name, value}[]` 반환
+- block_04 설명에 "색상 구분 슬롯 비워도 됨" 안내 추가
+
+#### 새 배경 등록
+- `characters.js BACKGROUNDS`: `promotion`, `ending_credits` 추가
+
+### 게임 상태 (useGameState.jsx) 새 필드
+| 필드 | 설명 |
+|------|------|
+| `levelAtChapterStart` | 챕터 시작 시 레벨 (레벨업 감지용) |
+| `hintFreeChapters` | 힌트 없이 클리어한 챕터 수 |
+| `maxConsecutiveCorrect` | 최대 연속 정답 수 |
+| `hadPerfectChapter` | 퍼펙트 클리어 달성 여부 |
+| `cgSeen` | 본 CG 키 배열 |
+| `pendingTitleUnlock` | 이번 챕터에서 신규 해금된 칭호 ID 배열 |
+
+---
 
 ---
 

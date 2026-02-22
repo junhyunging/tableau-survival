@@ -8,6 +8,7 @@ import {
 } from '../../hooks/useGameState'
 import { CHAPTER_META, PART_META } from '../../data/chapters/index'
 import { BACKGROUNDS, getCharacterName, getPartnerCharacter } from '../../data/characters'
+import TitleCollectionModal from '../common/TitleCollectionModal'
 
 const SWIPE_THRESHOLD = 46
 
@@ -37,6 +38,7 @@ export default function ChapterSelect() {
   )
 
   const [idx, setIdx] = useState(initialIndex)
+  const [showTitles, setShowTitles] = useState(false)
   const touchRef = useRef(0)
 
   useEffect(() => { setIdx(initialIndex) }, [initialIndex])
@@ -75,6 +77,7 @@ export default function ChapterSelect() {
       position: 'relative', minHeight: '100vh', width: '100%',
       overflow: 'hidden', background: '#080e1a', color: '#e8edf5',
     }}>
+      {showTitles && <TitleCollectionModal onClose={() => setShowTitles(false)} />}
       {/* BG */}
       <div style={{
         position: 'absolute', inset: 0,
@@ -101,9 +104,32 @@ export default function ChapterSelect() {
             </p>
             <h1 style={{ fontSize: '22px', fontWeight: 900, color: '#fff', margin: '2px 0 0' }}>캠페인 맵</h1>
           </div>
-          <div style={{ textAlign: 'right' }}>
-            <p style={{ fontSize: '12px', fontWeight: 600, color: 'rgba(255,255,255,0.7)' }}>Lv.{state.level} {levelTitle}</p>
-            <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.45)' }}>{partnerName} 호감도 {state.affection}</p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            {/* Title button */}
+            <button
+              onClick={() => setShowTitles(true)}
+              style={{
+                padding: '6px 12px', borderRadius: '10px', border: '1px solid rgba(255,210,97,0.2)',
+                background: 'rgba(255,210,97,0.08)', color: '#ffd261',
+                fontSize: '12px', fontWeight: 700, cursor: 'pointer',
+                display: 'flex', alignItems: 'center', gap: '6px',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255,210,97,0.15)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255,210,97,0.08)' }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffd261" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 9H4.5a2.5 2.5 0 010-5H6" /><path d="M18 9h1.5a2.5 2.5 0 000-5H18" />
+                <path d="M4 22h16" /><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20 7 22" />
+                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20 17 22" />
+                <path d="M18 2H6v7a6 6 0 0012 0V2z" />
+              </svg>
+              칭호
+            </button>
+            <div style={{ textAlign: 'right' }}>
+              <p style={{ fontSize: '12px', fontWeight: 600, color: 'rgba(255,255,255,0.7)', margin: 0 }}>Lv.{state.level} {state.currentTitle}</p>
+              <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.45)', margin: '2px 0 0' }}>{partnerName} 호감도 {state.affection}</p>
+            </div>
           </div>
         </div>
 
@@ -215,14 +241,30 @@ export default function ChapterSelect() {
               >
                 {/* Thumbnail area */}
                 <div style={{ position: 'relative', overflow: 'hidden', height: '65%' }}>
+                  {/* Code-based fallback bg (always renders behind image) */}
+                  <div style={{
+                    position: 'absolute', inset: 0,
+                    background: `linear-gradient(135deg, ${pc.accent}18 0%, #060d1a 60%)`,
+                  }}>
+                    <div style={{
+                      position: 'absolute', top: '50%', left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      fontSize: '56px', fontWeight: 900, lineHeight: 1,
+                      color: `${pc.accent}18`,
+                      fontVariantNumeric: 'tabular-nums',
+                    }}>
+                      {String(ch.id).padStart(2, '0')}
+                    </div>
+                  </div>
                   <img
                     src={getChapterThumb(ch.id)}
                     alt={`Ch ${ch.id}`}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    style={{ position: 'relative', zIndex: 1, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                     loading="lazy"
+                    onError={(e) => { e.target.style.display = 'none' }}
                   />
                   <div style={{
-                    position: 'absolute', inset: 0,
+                    position: 'absolute', inset: 0, zIndex: 2,
                     background: 'linear-gradient(to top, rgba(6,12,24,0.85) 0%, rgba(6,12,24,0.2) 40%, transparent 70%)',
                   }} />
 

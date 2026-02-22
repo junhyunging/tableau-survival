@@ -1,18 +1,22 @@
-﻿import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useGameState, useGameDispatch } from '../../hooks/useGameState'
 import { getChapter } from '../../data/chapters/index'
+import { getPartnerCharacter } from '../../data/characters'
 import VNScene from '../novel/VNScene'
 import QuestionRouter from '../questions/QuestionRouter'
 import TransitionScene from '../common/TransitionScene'
+import CGViewer from '../common/CGViewer'
 
 export default function ChapterFlow() {
   const state = useGameState()
   const dispatch = useGameDispatch()
   const [showTransition, setShowTransition] = useState(true)
   const [showPartnerGreeting, setShowPartnerGreeting] = useState(false)
+  const [pendingCG, setPendingCG] = useState(null)
 
   const chapter = getChapter(state.currentChapter)
   const genderKey = state.playerGender
+  const partnerId = getPartnerCharacter(state.playerGender)
 
   // Show transition on chapter change
   useEffect(() => {
@@ -20,17 +24,39 @@ export default function ChapterFlow() {
     setShowPartnerGreeting(false)
   }, [state.currentChapter])
 
+  // CG viewer intercepts chapter completion
+  if (pendingCG) {
+    return (
+      <CGViewer
+        cgKey={pendingCG.cg}
+        partnerId={partnerId}
+        onDismiss={() => {
+          dispatch({ type: 'ADD_CG_SEEN', payload: pendingCG.cg })
+          dispatch({
+            type: 'CHOICE_MADE',
+            payload: {
+              affectionChange: pendingCG.affectionChange,
+              xpChange: pendingCG.xpChange,
+            },
+          })
+          dispatch({ type: 'CHAPTER_COMPLETE' })
+          setPendingCG(null)
+        }}
+      />
+    )
+  }
+
   if (!chapter) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
           <p className="text-text-secondary text-lg mb-2">Chapter {state.currentChapter}</p>
-          <p className="text-text-dim">以鍮?以묒엯?덈떎...</p>
+          <p className="text-text-dim">준비 중입니다...</p>
           <button
             onClick={() => dispatch({ type: 'CHAPTER_COMPLETE' })}
             className="mt-4 px-6 py-2 bg-accent rounded-lg text-white cursor-pointer"
           >
-            梨뺥꽣 ?꾨즺
+            챕터 완료
           </button>
         </div>
       </div>
@@ -196,6 +222,7 @@ export default function ChapterFlow() {
       response: c.response[genderKey],
       affectionChange: c.affectionChange,
       xpChange: c.xpChange,
+      cg: c.cg || null,
     }))
 
     return (
@@ -207,14 +234,14 @@ export default function ChapterFlow() {
         playerName={state.playerName}
         choices={eventChoices}
         onChoice={(index, choice) => {
-          dispatch({
-            type: 'CHOICE_MADE',
-            payload: {
-              affectionChange: choice.affectionChange || 0,
-              xpChange: choice.xpChange || 0,
-            },
-          })
-          dispatch({ type: 'CHAPTER_COMPLETE' })
+          const affectionChange = choice.affectionChange || 0
+          const xpChange = choice.xpChange || 0
+          if (choice.cg) {
+            setPendingCG({ cg: choice.cg, affectionChange, xpChange })
+          } else {
+            dispatch({ type: 'CHOICE_MADE', payload: { affectionChange, xpChange } })
+            dispatch({ type: 'CHAPTER_COMPLETE' })
+          }
         }}
       />
     )
@@ -222,4 +249,3 @@ export default function ChapterFlow() {
 
   return null
 }
-

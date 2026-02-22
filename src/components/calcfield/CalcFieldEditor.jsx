@@ -55,10 +55,10 @@ export default function CalcFieldEditor({ problem, onComplete }) {
     setIsCorrect(result.isCorrect)
     setSubmitted(true)
     if (result.isCorrect) {
-      dispatch({ type: 'ANSWER_CORRECT', payload: problem.id })
+      dispatch({ type: 'ANSWER_CORRECT', payload: { problemId: problem.id } })
       setFeedback('정답입니다!')
     } else {
-      dispatch({ type: 'ANSWER_INCORRECT' })
+      dispatch({ type: 'ANSWER_INCORRECT', payload: { problemId: problem.id } })
       setFeedback(getPartialFeedback(formula, problem.partialFeedback) || '다시 확인해보세요.')
     }
   }

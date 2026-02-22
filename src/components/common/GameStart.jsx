@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGameDispatch, hasSavedGame, getSavedGame } from '../../hooks/useGameState'
+import { useAuth } from '../../hooks/useAuth'
 import { BACKGROUNDS } from '../../data/characters'
 
 export default function GameStart() {
   const dispatch = useGameDispatch()
   const navigate = useNavigate()
+  const { user, signOut } = useAuth()
   const savedExists = hasSavedGame()
   const saved = savedExists ? getSavedGame() : null
   const [hoveredBtn, setHoveredBtn] = useState(null)
@@ -112,6 +114,17 @@ export default function GameStart() {
           </div>
         </div>
       </main>
+
+      {/* User info + logout */}
+      <div className="absolute top-5 right-6 z-10 flex items-center gap-3">
+        <span className="text-[11px] text-white/30 truncate max-w-[160px]">{user?.email}</span>
+        <button
+          onClick={signOut}
+          className="text-[11px] text-white/30 hover:text-white/60 transition-colors cursor-pointer"
+        >
+          로그아웃
+        </button>
+      </div>
 
       {/* Version */}
       <div className="absolute bottom-6 right-6 z-10">

@@ -33,9 +33,9 @@ export default function QuizQuestion({ problem, onComplete }) {
     setSubmitted(true)
 
     if (correct) {
-      dispatch({ type: 'ANSWER_CORRECT', payload: problem.id })
+      dispatch({ type: 'ANSWER_CORRECT', payload: { problemId: problem.id } })
     } else {
-      dispatch({ type: 'ANSWER_INCORRECT' })
+      dispatch({ type: 'ANSWER_INCORRECT', payload: { problemId: problem.id } })
     }
   }
 
