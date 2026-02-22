@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider, useAuth } from './hooks/useAuth'
 import { GameProvider } from './hooks/useGameState'
 import LoginPage from './components/auth/LoginPage'
@@ -22,12 +22,12 @@ function AppContent() {
 
   return (
     <GameProvider>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<GameStart />} />
           <Route path="/play" element={<GamePlay />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </GameProvider>
   )
 }
