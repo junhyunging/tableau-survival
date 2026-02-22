@@ -8,6 +8,11 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    if (!supabase) {
+      setLoading(false)
+      return
+    }
+
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null)
@@ -25,16 +30,19 @@ export function AuthProvider({ children }) {
   }, [])
 
   const signUp = async (email, password) => {
+    if (!supabase) return { data: null, error: { message: 'Supabase 미설정' } }
     const { data, error } = await supabase.auth.signUp({ email, password })
     return { data, error }
   }
 
   const signIn = async (email, password) => {
+    if (!supabase) return { data: null, error: { message: 'Supabase 미설정' } }
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
     return { data, error }
   }
 
   const signOut = async () => {
+    if (!supabase) return { error: null }
     const { error } = await supabase.auth.signOut()
     return { error }
   }
