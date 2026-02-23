@@ -60,7 +60,7 @@ export const chapter1 = {
     dialogues: [
       { speaker: 'seoyeon', expression: 'default', text: '자, 첫 미션이에요.' },
       { speaker: 'seoyeon', expression: 'default', text: 'Tableau의 기본 인터페이스부터 익혀야 해요.' },
-      { speaker: 'seoyeon', expression: 'serious', text: '데이터 패인, 선반, 마크 카드, 표현방식 패널...' },
+      { speaker: 'seoyeon', expression: 'serious', text: '데이터 패널, 선반, 마크 카드, 표현방식 패널...' },
       { speaker: 'seoyeon', expression: 'default', text: '이 네 가지를 이해하면 Tableau의 절반은 아는 거예요.' },
       { speaker: 'seoyeon', expression: 'smile', text: '간단하죠? 그럼 시작해볼까요.' },
     ],
@@ -135,12 +135,12 @@ export const chapter1 = {
           male: [
             { speaker: 'seoyeon', expression: 'default', text: '좋아요. 간단히 먹으면서 내일 할 내용을 정리하죠.' },
             { speaker: 'seoyeon', expression: 'default', text: '내일은 차원과 측정값을 깊게 다룰 거예요. 여기서 성능 차이가 나요.' },
-            { speaker: 'seoyeon', expression: 'smile', text: '파랑은 차원, 초록은 측정값. 오늘은 이 두 가지만 확실히 기억해요.' },
+            { speaker: 'seoyeon', expression: 'smile', text: '파랑은 불연속, 초록은 연속. 오늘은 이 두 가지만 확실히 기억해요.' },
           ],
           female: [
             { speaker: 'seoyeon', expression: 'default', text: '좋아요. 저녁 먹으면서 짧게 피드백해줄게요.' },
             { speaker: 'seoyeon', expression: 'default', text: '내일은 차원과 측정값을 다뤄요. 이걸 정확히 알면 실수가 줄어요.' },
-            { speaker: 'seoyeon', expression: 'smile', text: '파랑은 차원, 초록은 측정값. 오늘은 이 문장만 머리에 넣고 퇴근해요.' },
+            { speaker: 'seoyeon', expression: 'smile', text: '파랑은 불연속, 초록은 연속. 오늘은 이 문장만 머리에 넣고 퇴근해요.' },
           ],
         },
       },

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useGameDispatch } from '../../hooks/useGameState'
+import { useGameDispatch, finalizeNewGameSession } from '../../hooks/useGameState'
 import { CHARACTERS, getPartnerCharacter } from '../../data/characters'
 
 export default function CharacterSetup() {
@@ -10,6 +10,7 @@ export default function CharacterSetup() {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (name.trim() && gender) {
+      finalizeNewGameSession()
       dispatch({ type: 'START_NEW_GAME', payload: { name: name.trim(), gender } })
     }
   }

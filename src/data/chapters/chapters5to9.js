@@ -51,7 +51,7 @@ export const chapter5 = {
     background: 'meeting_room',
     characters: [{ id: 'seoyeon', position: 'right' }],
     dialogues: [
-      { speaker: 'seoyeon', expression: 'default', text: '계산된 필드는 [분석] 메뉴 또는 데이터 패인 빈 공간 우클릭으로 만들 수 있어요.' },
+      { speaker: 'seoyeon', expression: 'default', text: '계산된 필드는 [분석] 메뉴 또는 데이터 패널 빈 공간 우클릭으로 만들 수 있어요.' },
       {
         speaker: 'seoyeon',
         expression: 'serious',

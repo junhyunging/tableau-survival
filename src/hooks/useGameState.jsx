@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useEffect, useRef, useCallback } from 'react'
+import { createContext, useContext, useReducer, useEffect, useRef, useCallback, useState } from 'react'
 import { checkTitleUnlocks } from '../data/titles'
 import { supabase } from '../lib/supabase'
 
@@ -6,6 +6,7 @@ const GameContext = createContext(null)
 const GameDispatchContext = createContext(null)
 
 const STORAGE_KEY = 'tableau-quest-save'
+const FORCE_NEW_GAME_KEY = 'tableau-quest-force-new-game'
 const SAVE_DEBOUNCE_MS = 2000
 
 const XP_TABLE = [0, 80, 200, 400, 700, 1100, 1600, 2200, 3000, 4000]
@@ -396,13 +397,82 @@ function gameReducer(state, action) {
 // --- localStorage helpers (offline fallback) ---
 
 function loadSavedGame() {
+  const snapshot = loadLocalSnapshot()
+  return snapshot?.saveData ?? null
+}
+
+function loadLocalSnapshot() {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY)
-    if (saved) return JSON.parse(saved)
+    const raw = localStorage.getItem(STORAGE_KEY)
+    if (!raw) return null
+
+    const parsed = JSON.parse(raw)
+    if (!parsed || typeof parsed !== 'object') return null
+
+    // New snapshot format
+    if (parsed.saveData && typeof parsed.saveData === 'object') {
+      return {
+        saveData: parsed.saveData,
+        updatedAt: parsed.updatedAt || null,
+        userId: parsed.userId || null,
+      }
+    }
+
+    // Backward compatibility: legacy format was direct game state JSON
+    return {
+      saveData: parsed,
+      updatedAt: null,
+      userId: null,
+    }
+  } catch {
+    // ignore
+    return null
+  }
+}
+
+function saveLocalSnapshot(saveData, userId, updatedAt = null) {
+  try {
+    const snapshot = {
+      saveData,
+      updatedAt: updatedAt || new Date().toISOString(),
+      userId: userId || null,
+    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot))
   } catch {
     // ignore
   }
-  return null
+}
+
+function consumeForceNewGameFlag() {
+  try {
+    const shouldForceNew = localStorage.getItem(FORCE_NEW_GAME_KEY) === '1'
+    if (shouldForceNew) {
+      localStorage.removeItem(FORCE_NEW_GAME_KEY)
+    }
+    return shouldForceNew
+  } catch {
+    return false
+  }
+}
+
+function clearForceNewGameFlag() {
+  try {
+    localStorage.removeItem(FORCE_NEW_GAME_KEY)
+  } catch {
+    // ignore
+  }
+}
+
+function parseTimestamp(ts) {
+  if (!ts || typeof ts !== 'string') return 0
+  const ms = Date.parse(ts)
+  return Number.isFinite(ms) ? ms : 0
+}
+
+function isLocalNewerThanCloud(localSnapshot, cloudSnapshot) {
+  if (!localSnapshot?.saveData) return false
+  if (!cloudSnapshot?.saveData) return true
+  return parseTimestamp(localSnapshot.updatedAt) > parseTimestamp(cloudSnapshot.updatedAt)
 }
 
 // --- Supabase save/load helpers ---
@@ -411,7 +481,7 @@ async function loadFromSupabase(userId) {
   try {
     const { data, error } = await supabase
       .from('game_saves')
-      .select('save_data')
+      .select('save_data, updated_at')
       .eq('user_id', userId)
       .single()
 
@@ -420,7 +490,12 @@ async function loadFromSupabase(userId) {
       console.error('Supabase load error:', error)
       return null
     }
-    return data?.save_data ?? null
+    if (!data?.save_data) return null
+    return {
+      saveData: data.save_data,
+      updatedAt: data.updated_at || null,
+      userId,
+    }
   } catch (err) {
     console.error('Supabase load error:', err)
     return null
@@ -446,37 +521,73 @@ async function saveToSupabase(userId, saveData) {
 
 export function GameProvider({ children }) {
   const [state, dispatch] = useReducer(gameReducer, initialState)
+  const [isHydrating, setIsHydrating] = useState(true)
   const saveTimerRef = useRef(null)
   const initialLoadDone = useRef(false)
+  const currentUserIdRef = useRef(null)
 
   // Load save from Supabase on mount (user is already authenticated when GameProvider renders)
   useEffect(() => {
     let cancelled = false
 
     async function loadSave() {
-      const { data: { session } } = await supabase.auth.getSession()
-      const userId = session?.user?.id
-
-      if (userId) {
-        const cloudSave = await loadFromSupabase(userId)
-        if (!cancelled && cloudSave) {
-          dispatch({ type: 'LOAD_GAME', payload: cloudSave })
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(cloudSave))
-        } else if (!cancelled) {
-          // New user with no cloud save — clear leftover localStorage from other users
-          localStorage.removeItem(STORAGE_KEY)
+      try {
+        const forceNewGame = consumeForceNewGameFlag()
+        if (forceNewGame) {
+          if (!cancelled) {
+            localStorage.removeItem(STORAGE_KEY)
+            initialLoadDone.current = true
+            setIsHydrating(false)
+          }
+          return
         }
-        initialLoadDone.current = true
-        return
-      }
 
-      // No auth session (shouldn't happen, but fallback)
-      if (!cancelled) {
-        const localSave = loadSavedGame()
-        if (localSave) {
-          dispatch({ type: 'LOAD_GAME', payload: localSave })
+        if (supabase) {
+          const { data: { session } } = await supabase.auth.getSession()
+          const userId = session?.user?.id
+          currentUserIdRef.current = userId || null
+
+          if (userId) {
+            const cloudSave = await loadFromSupabase(userId)
+            const localSnapshot = loadLocalSnapshot()
+            const localForUser = localSnapshot?.userId === userId ? localSnapshot : null
+
+            if (!cancelled && localForUser?.saveData && isLocalNewerThanCloud(localForUser, cloudSave)) {
+              dispatch({ type: 'LOAD_GAME', payload: localForUser.saveData })
+              // Keep cloud in sync with fresher local data.
+              await saveToSupabase(userId, localForUser.saveData)
+            } else if (!cancelled && cloudSave?.saveData) {
+              dispatch({ type: 'LOAD_GAME', payload: cloudSave.saveData })
+              saveLocalSnapshot(cloudSave.saveData, userId, cloudSave.updatedAt)
+            } else if (!cancelled) {
+              // New user with no cloud save — clear leftover localStorage from other users
+              if (localSnapshot && localSnapshot.userId !== userId) {
+                localStorage.removeItem(STORAGE_KEY)
+              }
+            }
+            if (!cancelled) {
+              initialLoadDone.current = true
+              setIsHydrating(false)
+            }
+            return
+          }
         }
-        initialLoadDone.current = true
+
+        // No auth session (or Supabase unavailable): local fallback
+        if (!cancelled) {
+          const localSnapshot = loadLocalSnapshot()
+          if (localSnapshot?.saveData) {
+            dispatch({ type: 'LOAD_GAME', payload: localSnapshot.saveData })
+          }
+          initialLoadDone.current = true
+          setIsHydrating(false)
+        }
+      } catch (err) {
+        console.error('Initial game load error:', err)
+        if (!cancelled) {
+          initialLoadDone.current = true
+          setIsHydrating(false)
+        }
       }
     }
 
@@ -485,18 +596,19 @@ export function GameProvider({ children }) {
   }, [])
 
   // Debounced save to both localStorage and Supabase
-  const debouncedSave = useCallback((saveState) => {
+  const debouncedCloudSave = useCallback((saveState) => {
     if (saveTimerRef.current) {
       clearTimeout(saveTimerRef.current)
     }
     saveTimerRef.current = setTimeout(async () => {
-      // Always save to localStorage
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(saveState))
+      if (!supabase) return
 
       // Save to Supabase if logged in
       const { data: { session } } = await supabase.auth.getSession()
-      if (session?.user?.id) {
-        await saveToSupabase(session.user.id, saveState)
+      const userId = session?.user?.id || null
+      currentUserIdRef.current = userId
+      if (userId) {
+        await saveToSupabase(userId, saveState)
       }
     }, SAVE_DEBOUNCE_MS)
   }, [])
@@ -504,7 +616,10 @@ export function GameProvider({ children }) {
   useEffect(() => {
     if (!initialLoadDone.current) return
     if (state.phase !== 'title') {
-      debouncedSave(state)
+      // Local save is immediate so refresh cannot lose latest in-progress state.
+      saveLocalSnapshot(state, currentUserIdRef.current)
+      // Cloud save remains debounced to reduce write load.
+      debouncedCloudSave(state)
     }
 
     return () => {
@@ -512,10 +627,10 @@ export function GameProvider({ children }) {
         clearTimeout(saveTimerRef.current)
       }
     }
-  }, [state, debouncedSave])
+  }, [state, debouncedCloudSave])
 
   return (
-    <GameContext.Provider value={state}>
+    <GameContext.Provider value={{ ...state, isHydrating }}>
       <GameDispatchContext.Provider value={dispatch}>
         {children}
       </GameDispatchContext.Provider>
@@ -541,4 +656,36 @@ export function getSavedGame() {
 
 export function clearSavedGame() {
   localStorage.removeItem(STORAGE_KEY)
+}
+
+export async function beginNewGameSession() {
+  try {
+    localStorage.setItem(FORCE_NEW_GAME_KEY, '1')
+    localStorage.removeItem(STORAGE_KEY)
+  } catch {
+    // ignore
+  }
+
+  if (!supabase) return
+
+  try {
+    const { data: { session } } = await supabase.auth.getSession()
+    const userId = session?.user?.id
+    if (!userId) return
+
+    const { error } = await supabase
+      .from('game_saves')
+      .delete()
+      .eq('user_id', userId)
+
+    if (error) {
+      console.error('Supabase delete save error:', error)
+    }
+  } catch (err) {
+    console.error('Supabase delete save error:', err)
+  }
+}
+
+export function finalizeNewGameSession() {
+  clearForceNewGameFlag()
 }

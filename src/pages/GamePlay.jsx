@@ -11,6 +11,14 @@ import GameComplete from '../components/common/GameComplete'
 export default function GamePlay() {
   const state = useGameState()
 
+  if (state.isHydrating) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-bg-primary">
+        <div className="text-white/40 text-sm">세이브 불러오는 중...</div>
+      </div>
+    )
+  }
+
   // Title phase → redirect to home (handled by App routes)
   if (state.phase === 'title') {
     return <CharacterSetup />

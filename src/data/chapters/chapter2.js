@@ -44,7 +44,7 @@ export const chapter2 = {
       characters: [{ id: 'junhyung', position: 'right' }],
       dialogues: [
         { speaker: 'junhyung', expression: 'smirk', text: '오늘도 일찍 왔네. 열심히네.' },
-        { speaker: 'junhyung', expression: 'default', text: '차원이랑 측정값은 생각보다 간단해. 파랑이랑 초록만 기억하면 돼.' },
+        { speaker: 'junhyung', expression: 'default', text: '차원이랑 측정값은 생각보다 간단해. 파랑=불연속, 초록=연속 이거부터 기억하면 돼.' },
         { speaker: 'junhyung', expression: 'lookaway', text: '...뭐, 모르는 거 있으면 물어봐. 아는 건 말해줄게.' },
       ],
     },
@@ -54,8 +54,8 @@ export const chapter2 = {
     background: 'meeting_room',
     characters: [{ id: 'seoyeon', position: 'right' }],
     dialogues: [
-      { speaker: 'seoyeon', expression: 'default', text: '자, 데이터 패인을 보면 두 가지 색깔이 보이죠?' },
-      { speaker: 'seoyeon', expression: 'serious', text: '파란색 필드가 차원, 초록색 필드가 측정값이에요.' },
+      { speaker: 'seoyeon', expression: 'default', text: '자, 데이터 패널을 보면 두 가지 색깔이 보이죠?' },
+      { speaker: 'seoyeon', expression: 'serious', text: '색상은 연속/불연속을 뜻해요. 파란색은 불연속형, 초록색은 연속형이에요.' },
       {
         speaker: 'seoyeon',
         expression: 'default',
@@ -64,7 +64,7 @@ export const chapter2 = {
       {
         speaker: 'seoyeon',
         expression: 'default',
-        text: '그리고 측정값은 연속형, 차원은 불연속형인 경우가 많아요. 연속형은 축이, 불연속형은 헤더가 생깁니다.',
+        text: '차원은 불연속, 측정값은 연속으로 시작하는 경우가 많지만 필요하면 언제든 전환할 수 있어요. 연속형은 축이, 불연속형은 헤더가 생깁니다.',
       },
       { speaker: 'seoyeon', expression: 'smile', text: '이론은 여기까지. 직접 해봐요.' },
     ],
@@ -82,7 +82,7 @@ export const chapter2 = {
       { speaker: 'seoyeon', expression: 'default', text: '차원과 측정값을 올바른 선반에 배치해보세요. 집중해요.' },
     ],
     partnerLine: {
-      male: { speaker: 'sohee', expression: 'cheer', text: '할 수 있어! 파랑이랑 초록 생각하면서 해봐~' },
+      male: { speaker: 'sohee', expression: 'cheer', text: '할 수 있어! 파랑=불연속, 초록=연속 기억하면서 해봐~' },
       female: { speaker: 'junhyung', expression: 'smirk', text: '봐봐, 생각보다 쉬울 거야. 해봐.' },
     },
   },
@@ -151,7 +151,7 @@ export const chapter2 = {
         response: {
           male: [
             { speaker: 'narrator', text: '조용한 구석 자리에서 혼자 노트를 펼쳤다.' },
-            { speaker: 'narrator', text: '차원=파랑, 측정값=초록. 단순하지만 강력한 원리가 조금씩 정리되어 갔다.' },
+            { speaker: 'narrator', text: '파랑=불연속, 초록=연속. 단순하지만 강력한 원리가 조금씩 정리되어 갔다.' },
           ],
           female: [
             { speaker: 'narrator', text: '잠깐 자리를 벗어나 노트를 정리했다.' },

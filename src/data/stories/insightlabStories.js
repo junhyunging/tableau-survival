@@ -30,7 +30,7 @@ export const insightlabStory = {
           { speaker: 'seoyeon', expression: 'default', text: '데이터에는 크게 두 종류가 있어요.' },
           { speaker: 'seoyeon', expression: 'smile', text: '"차원"은 분류의 기준이 되는 필드입니다. 카테고리, 지역 같은 것들이죠.' },
           { speaker: 'seoyeon', expression: 'default', text: '"측정값"은 숫자로 집계할 수 있는 필드예요. 매출액, 수량 같은 것들.' },
-          { speaker: 'seoyeon', expression: 'impressed', text: 'Tableau에서 차원은 파란색, 측정값은 초록색으로 표시됩니다.' },
+          { speaker: 'seoyeon', expression: 'impressed', text: 'Tableau에서 파란색은 불연속형, 초록색은 연속형을 뜻해요.' },
           { speaker: 'seoyeon', expression: 'serious', text: '이거 구분 못 하면... 뭐, 알아서 하세요.' },
           { speaker: 'seoyeon', expression: 'default', text: '자, 간단한 퀴즈로 확인해봅시다.' },
         ],
@@ -51,7 +51,7 @@ export const insightlabStory = {
             response: [
               { speaker: 'sohee', expression: 'cheer', text: '좋아요! 회사 근처 맛집 알려드릴게요.' },
               { speaker: 'sohee', expression: 'excited', text: '서연 팀장님, 무서워 보이지만 실력 있으면 인정해주는 분이에요.' },
-              { speaker: 'sohee', expression: 'amazed', text: '힌트 하나! Tableau에서 필드 색상을 잘 보세요. 파랑과 초록!' },
+              { speaker: 'sohee', expression: 'amazed', text: '힌트 하나! Tableau에서 파랑은 불연속형, 초록은 연속형이야!' },
             ],
           },
           {

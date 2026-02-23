@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useGameDispatch, hasSavedGame, getSavedGame } from '../../hooks/useGameState'
+import { useGameDispatch, hasSavedGame, getSavedGame, beginNewGameSession } from '../../hooks/useGameState'
 import { useAuth } from '../../hooks/useAuth'
 import { BACKGROUNDS } from '../../data/characters'
 
@@ -11,8 +11,12 @@ export default function GameStart() {
   const savedExists = hasSavedGame()
   const saved = savedExists ? getSavedGame() : null
   const [hoveredBtn, setHoveredBtn] = useState(null)
+  const [isStartingNewGame, setIsStartingNewGame] = useState(false)
 
-  const handleNewGame = () => {
+  const handleNewGame = async () => {
+    if (isStartingNewGame) return
+    setIsStartingNewGame(true)
+    await beginNewGameSession()
     dispatch({ type: 'RESET' })
     navigate('/play')
   }
@@ -79,12 +83,13 @@ export default function GameStart() {
           <div className="mt-10 flex flex-col gap-3 w-full max-w-xs">
             <button
               onClick={handleNewGame}
+              disabled={isStartingNewGame}
               onMouseEnter={() => setHoveredBtn('new')}
               onMouseLeave={() => setHoveredBtn(null)}
-              className="group relative overflow-hidden rounded-2xl bg-accent px-8 py-4 text-[17px] font-bold text-white transition-all duration-300 hover:shadow-[0_0_40px_rgba(91,141,240,0.35)] hover:scale-[1.03] cursor-pointer"
+              className="group relative overflow-hidden rounded-2xl bg-accent px-8 py-4 text-[17px] font-bold text-white transition-all duration-300 hover:shadow-[0_0_40px_rgba(91,141,240,0.35)] hover:scale-[1.03] cursor-pointer disabled:opacity-70 disabled:cursor-wait disabled:hover:scale-100"
             >
               <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/15 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-              <span className="relative">새 게임 시작</span>
+              <span className="relative">{isStartingNewGame ? '새 게임 준비 중...' : '새 게임 시작'}</span>
             </button>
 
             {savedExists && (
