@@ -110,6 +110,7 @@ export const chapter17 = {
         text: '동기와 점심 먹으며 최종 프로젝트 얘기',
         affectionChange: 4,
         xpChange: 0,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'sohee', expression: 'excited', text: '최종 프로젝트 생각해봤어? 나는 뭘 만들지 벌써부터 설레~' },
@@ -125,6 +126,7 @@ export const chapter17 = {
         text: '혼자 점심 먹으며 최종 프로젝트 기획',
         affectionChange: -1,
         xpChange: 7,
+        hintChange: 1,
         response: {
           male: [
             { speaker: 'narrator', text: '노트에 최종 프로젝트 아이디어를 끄적였다.' },
@@ -140,6 +142,7 @@ export const chapter17 = {
         text: '팀장에게 최종 프로젝트 주제 조언',
         affectionChange: 0,
         xpChange: 8,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'seoyeon', expression: 'default', text: '최종 프로젝트 주제요? 관심 있는 도메인에서 찾아봐요.' },
@@ -265,6 +268,7 @@ export const chapter18 = {
         text: '동기와 함께 인터랙션 아이디어 공유',
         affectionChange: 4,
         xpChange: 0,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'sohee', expression: 'default', text: '나 지금 최종 프로젝트에 어떤 액션 넣을지 고민 중이야. 봐줄 수 있어?' },
@@ -280,6 +284,7 @@ export const chapter18 = {
         text: '조용히 액션 연습',
         affectionChange: -1,
         xpChange: 6,
+        hintChange: 1,
         response: {
           male: [
             { speaker: 'narrator', text: '카페에서 조용히 다양한 액션을 직접 만들어봤다.' },
@@ -295,6 +300,7 @@ export const chapter18 = {
         text: '팀장에게 효과적인 액션 UX 조언',
         affectionChange: 0,
         xpChange: 8,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'seoyeon', expression: 'default', text: '액션 UX요? 액션이 많다고 좋은 게 아니에요.' },
@@ -426,6 +432,7 @@ export const chapter19 = {
         text: '동기 옆에 서서 이야기',
         affectionChange: 5,
         xpChange: 0,
+        hintChange: 0,
         cg: 'nightwalk',
         response: {
           male: [
@@ -444,6 +451,7 @@ export const chapter19 = {
         text: '혼자 최종 프로젝트 마무리 준비',
         affectionChange: -2,
         xpChange: 8,
+        hintChange: 1,
         response: {
           male: [
             { speaker: 'narrator', text: '자리에 돌아와 최종 프로젝트 구상을 정리했다.' },
@@ -459,6 +467,7 @@ export const chapter19 = {
         text: '팀장에게 최종 프로젝트 체크리스트 확인',
         affectionChange: 0,
         xpChange: 8,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'seoyeon', expression: 'default', text: '최종 프로젝트 체크리스트요? 좋아요.' },
@@ -615,6 +624,7 @@ export const chapter20 = {
         text: '동기에게 솔직하게 고마움 전하기',
         affectionChange: 8,
         xpChange: 0,
+        hintChange: 0,
         cg: 'confession',
         response: {
           male: [
@@ -649,6 +659,7 @@ export const chapter20 = {
         text: '팀장에게 감사 인사',
         affectionChange: 0,
         xpChange: 10,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'seoyeon', expression: 'smile', text: '잘 해줬어요. 진짜로.' },
@@ -670,6 +681,7 @@ export const chapter20 = {
         text: '팀 모두와 함께 마지막을 즐기기',
         affectionChange: 3,
         xpChange: 5,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'narrator', text: '팀 전체가 함께 건배했다.' },

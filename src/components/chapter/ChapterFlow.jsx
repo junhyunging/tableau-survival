@@ -6,6 +6,7 @@ import VNScene from '../novel/VNScene'
 import QuestionRouter from '../questions/QuestionRouter'
 import TransitionScene from '../common/TransitionScene'
 import CGViewer from '../common/CGViewer'
+import BuffSelect from './BuffSelect'
 
 export default function ChapterFlow() {
   const state = useGameState()
@@ -13,6 +14,8 @@ export default function ChapterFlow() {
   const [showTransition, setShowTransition] = useState(true)
   const [showPartnerGreeting, setShowPartnerGreeting] = useState(false)
   const [pendingCG, setPendingCG] = useState(null)
+  const [eventPhase, setEventPhase] = useState('intro') // intro → select → response
+  const [selectedChoice, setSelectedChoice] = useState(null)
 
   const chapter = getChapter(state.currentChapter)
   const genderKey = state.playerGender
@@ -22,6 +25,8 @@ export default function ChapterFlow() {
   useEffect(() => {
     setShowTransition(true)
     setShowPartnerGreeting(false)
+    setEventPhase('intro')
+    setSelectedChoice(null)
   }, [state.currentChapter])
 
   // CG viewer intercepts chapter completion
@@ -37,6 +42,7 @@ export default function ChapterFlow() {
             payload: {
               affectionChange: pendingCG.affectionChange,
               xpChange: pendingCG.xpChange,
+              hintChange: pendingCG.hintChange || 0,
             },
           })
           dispatch({ type: 'CHAPTER_COMPLETE' })
@@ -222,29 +228,61 @@ export default function ChapterFlow() {
       response: c.response[genderKey],
       affectionChange: c.affectionChange,
       xpChange: c.xpChange,
+      hintChange: c.hintChange || 0,
       cg: c.cg || null,
     }))
 
-    return (
-      <VNScene
-        key={`ch${state.currentChapter}-event`}
-        background={event.background}
-        characters={[]}
-        dialogues={event.intro.dialogues}
-        playerName={state.playerName}
-        choices={eventChoices}
-        onChoice={(index, choice) => {
-          const affectionChange = choice.affectionChange || 0
-          const xpChange = choice.xpChange || 0
-          if (choice.cg) {
-            setPendingCG({ cg: choice.cg, affectionChange, xpChange })
-          } else {
-            dispatch({ type: 'CHOICE_MADE', payload: { affectionChange, xpChange } })
-            dispatch({ type: 'CHAPTER_COMPLETE' })
-          }
-        }}
-      />
-    )
+    // Phase 1: Intro dialogue
+    if (eventPhase === 'intro') {
+      return (
+        <VNScene
+          key={`ch${state.currentChapter}-event-intro`}
+          background={event.background}
+          characters={[]}
+          dialogues={event.intro.dialogues}
+          playerName={state.playerName}
+          onComplete={() => setEventPhase('select')}
+        />
+      )
+    }
+
+    // Phase 2: Roguelike card selection
+    if (eventPhase === 'select') {
+      return (
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <BuffSelect
+            choices={eventChoices}
+            contextBackground={event.background || null}
+            onSelect={(index, choice) => {
+              setSelectedChoice(choice)
+              const affectionChange = choice.affectionChange || 0
+              const xpChange = choice.xpChange || 0
+              const hintChange = choice.hintChange || 0
+              if (choice.cg) {
+                setPendingCG({ cg: choice.cg, affectionChange, xpChange, hintChange })
+              } else {
+                dispatch({ type: 'CHOICE_MADE', payload: { affectionChange, xpChange, hintChange } })
+                setEventPhase('response')
+              }
+            }}
+          />
+        </div>
+      )
+    }
+
+    // Phase 3: Response dialogue after selection
+    if (eventPhase === 'response' && selectedChoice) {
+      return (
+        <VNScene
+          key={`ch${state.currentChapter}-event-response`}
+          background={event.background}
+          characters={[]}
+          dialogues={selectedChoice.response}
+          playerName={state.playerName}
+          onComplete={() => dispatch({ type: 'CHAPTER_COMPLETE' })}
+        />
+      )
+    }
   }
 
   return null

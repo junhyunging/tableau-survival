@@ -113,6 +113,7 @@ export const chapter5 = {
         text: '동기와 함께 점심 먹기',
         affectionChange: 3,
         xpChange: 0,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'sohee', expression: 'excited', text: '같이 가자!! 나 오늘 먹고 싶은 거 있었어~' },
@@ -130,6 +131,7 @@ export const chapter5 = {
         text: '박서연 팀장과 점심 미팅',
         affectionChange: 0,
         xpChange: 5,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'seoyeon', expression: 'default', text: '같이 먹자고요? 좋아요.' },
@@ -145,6 +147,7 @@ export const chapter5 = {
         text: '혼자 빠르게 먹고 연습',
         affectionChange: -1,
         xpChange: 3,
+        hintChange: 1,
         response: {
           male: [
             { speaker: 'narrator', text: '편의점에서 간단히 해결하고 빠르게 자리로 돌아왔다.' },
@@ -269,6 +272,7 @@ export const chapter6 = {
         text: '동기와 카페에서 함수 복습',
         affectionChange: 3,
         xpChange: 0,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'sohee', expression: 'default', text: '같이 앉자! DATETRUNC 설명해줄 수 있어? 좀 헷갈려서.' },
@@ -284,6 +288,7 @@ export const chapter6 = {
         text: '혼자 카페에서 노트 정리',
         affectionChange: -1,
         xpChange: 5,
+        hintChange: 1,
         response: {
           male: [
             { speaker: 'narrator', text: '혼자 오늘 배운 함수들을 노트에 정리했다.' },
@@ -299,6 +304,7 @@ export const chapter6 = {
         text: '팀장에게 실무 활용 사례 물어보기',
         affectionChange: 0,
         xpChange: 7,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'seoyeon', expression: 'default', text: '실무에서요? 날짜 함수는 거의 매 프로젝트에 써요.' },
@@ -417,6 +423,7 @@ export const chapter7 = {
         text: '동기의 고민을 도와주기',
         affectionChange: 4,
         xpChange: 0,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'sohee', expression: 'worried', text: '이거 매개변수가 계산 필드에 안 먹히는 것 같은데...' },
@@ -433,6 +440,7 @@ export const chapter7 = {
         text: '먼저 퇴근하기',
         affectionChange: -1,
         xpChange: 2,
+        hintChange: 1,
         response: {
           male: [
             { speaker: 'narrator', text: '먼저 퇴근하며 오늘 배운 내용을 머릿속으로 정리했다.' },
@@ -448,6 +456,7 @@ export const chapter7 = {
         text: '나도 야근하며 매개변수 더 연습',
         affectionChange: 2,
         xpChange: 8,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'narrator', text: '동기 옆에서 각자 화면을 보며 연습을 이어갔다.' },
@@ -570,6 +579,7 @@ export const chapter8 = {
         text: '동기 옆에 앉기',
         affectionChange: 5,
         xpChange: 0,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'sohee', expression: 'excited', text: '왔다! 여기 여기~ 자리 맡아놨어!' },
@@ -586,6 +596,7 @@ export const chapter8 = {
         text: '팀장 옆 자리 선택',
         affectionChange: -2,
         xpChange: 10,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'seoyeon', expression: 'default', text: '또 팀장 옆이에요? 열정적이네요.' },
@@ -601,6 +612,7 @@ export const chapter8 = {
         text: '동기에게 다가가 기술적인 얘기 나누기',
         affectionChange: 2,
         xpChange: 5,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'sohee', expression: 'excited', text: '오 왔어! 나 테이블 계산 어드레싱이 아직도 좀 헷갈리는데 간단히 설명해줄 수 있어?' },
@@ -729,6 +741,7 @@ export const chapter9 = {
         text: '동기와 특별한 점심',
         affectionChange: 5,
         xpChange: 0,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'sohee', expression: 'excited', text: '우리 Part 2 다 했으니까 특별한 거 먹자! 내가 쏠게~' },
@@ -746,6 +759,7 @@ export const chapter9 = {
         text: '팀 전체 점심 모임',
         affectionChange: 0,
         xpChange: 8,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'seoyeon', expression: 'smile', text: '팀 전체 같이 먹는 건 좋죠. 이런 시간이 팀워크를 만들어요.' },
@@ -761,6 +775,7 @@ export const chapter9 = {
         text: '혼자 점심 먹으며 Part 3 예습',
         affectionChange: -1,
         xpChange: 5,
+        hintChange: 1,
         response: {
           male: [
             { speaker: 'narrator', text: '혼자 식사를 마치고 Part 3 첫 챕터인 KPI 대시보드를 미리 훑었다.' },

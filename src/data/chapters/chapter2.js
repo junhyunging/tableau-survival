@@ -118,6 +118,7 @@ export const chapter2 = {
         text: '동기와 함께 커피 마시며 이야기하기',
         affectionChange: 3,
         xpChange: 0,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'sohee', expression: 'default', text: '어 같이 마시자! 오늘 내용 좀 정리됐어?' },
@@ -133,6 +134,7 @@ export const chapter2 = {
         text: '박서연 팀장에게 추가 질문하기',
         affectionChange: 0,
         xpChange: 5,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'seoyeon', expression: 'default', text: '질문이 있다고요? 좋아요, 말해봐요.' },
@@ -148,6 +150,7 @@ export const chapter2 = {
         text: '혼자 조용히 복습하기',
         affectionChange: -1,
         xpChange: 3,
+        hintChange: 1,
         response: {
           male: [
             { speaker: 'narrator', text: '조용한 구석 자리에서 혼자 노트를 펼쳤다.' },

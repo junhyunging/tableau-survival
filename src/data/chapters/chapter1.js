@@ -114,6 +114,7 @@ export const chapter1 = {
         text: '동기와 저녁 먹고 같이 퇴근하기',
         affectionChange: 3,
         xpChange: 0,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'sohee', expression: 'excited', text: '같이 가자! 퇴근 전에 간단히 먹고 들어가자~' },
@@ -131,6 +132,7 @@ export const chapter1 = {
         text: '박서연 팀장과 저녁 미팅하기',
         affectionChange: 0,
         xpChange: 5,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'seoyeon', expression: 'default', text: '좋아요. 간단히 먹으면서 내일 할 내용을 정리하죠.' },
@@ -148,6 +150,7 @@ export const chapter1 = {
         text: '혼자 복습하고 퇴근하기',
         affectionChange: -1,
         xpChange: 3,
+        hintChange: 1,
         response: {
           male: [
             { speaker: 'narrator', text: '혼자 남아 조용히 Tableau 문서를 복습한 뒤 늦게 퇴근했다.' },

@@ -110,6 +110,7 @@ export const chapter10 = {
         text: '동기와 대시보드 아이디어 나누기',
         affectionChange: 3,
         xpChange: 0,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'sohee', expression: 'excited', text: '나 지금 KPI 레이아웃 고민 중인데 같이 봐줄 수 있어?' },
@@ -125,6 +126,7 @@ export const chapter10 = {
         text: '혼자 대시보드 완성도 높이기',
         affectionChange: -1,
         xpChange: 5,
+        hintChange: 1,
         response: {
           male: [
             { speaker: 'narrator', text: '카페 한쪽에서 오늘 만든 KPI 대시보드를 개선했다.' },
@@ -140,6 +142,7 @@ export const chapter10 = {
         text: '팀장에게 디자인 원칙 조언 구하기',
         affectionChange: 0,
         xpChange: 7,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'seoyeon', expression: 'default', text: '대시보드 디자인이요? 가장 중요한 건 시선 이동 경로예요.' },
@@ -257,6 +260,7 @@ export const chapter11 = {
         text: '동기와 우산 함께 쓰고 귀가',
         affectionChange: 6,
         xpChange: 0,
+        hintChange: 0,
         cg: 'umbrella',
         response: {
           male: [
@@ -275,6 +279,7 @@ export const chapter11 = {
         text: '먼저 마무리하고 퇴근',
         affectionChange: -2,
         xpChange: 3,
+        hintChange: 1,
         response: {
           male: [
             { speaker: 'narrator', text: '자신의 작업을 마무리하고 먼저 퇴근했다.' },
@@ -290,6 +295,7 @@ export const chapter11 = {
         text: '팀장에게 도움 요청해서 함께 해결',
         affectionChange: 0,
         xpChange: 8,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'seoyeon', expression: 'default', text: '마감 전에 막히면 말해야죠. 뭐가 문제예요?' },
@@ -412,6 +418,7 @@ export const chapter12 = {
         text: '동기 옆 자리',
         affectionChange: 5,
         xpChange: 0,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'sohee', expression: 'excited', text: '왔다! 여기 앉아~ 오늘 파레토 차트 완성한 기념으로 건배하자!' },
@@ -427,6 +434,7 @@ export const chapter12 = {
         text: '팀장과 심도 있는 대화',
         affectionChange: -2,
         xpChange: 10,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'seoyeon', expression: 'smile', text: '팀장 옆에 또 왔네요. RFM 분석 미리 설명해줄게요.' },
@@ -442,6 +450,7 @@ export const chapter12 = {
         text: '선배에게 클라이언트 대응 노하우 듣기',
         affectionChange: 0,
         xpChange: 8,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'narrator', text: '선배 분석가에게 클라이언트 요청 대응법을 들었다.' },
@@ -558,6 +567,7 @@ export const chapter13 = {
         text: '동기와 점심, 분석 얘기',
         affectionChange: 5,
         xpChange: 0,
+        hintChange: 0,
         cg: 'gift',
         response: {
           male: [
@@ -576,6 +586,7 @@ export const chapter13 = {
         text: '팀장과 클라이언트 전략 논의',
         affectionChange: 0,
         xpChange: 7,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'seoyeon', expression: 'default', text: '세그먼트 나누는 것까지는 쉬워요. 중요한 건 각 세그먼트에 맞는 전략을 제안하는 거예요.' },
@@ -591,6 +602,7 @@ export const chapter13 = {
         text: '혼자 다음 챕터 예습',
         affectionChange: -1,
         xpChange: 5,
+        hintChange: 1,
         response: {
           male: [
             { speaker: 'narrator', text: '혼자 식사를 마치고 코호트 분석을 미리 찾아봤다.' },
@@ -711,6 +723,7 @@ export const chapter14 = {
         text: '동기와 함께 코호트 결과 복기',
         affectionChange: 4,
         xpChange: 0,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'sohee', expression: 'default', text: '오늘 코호트 히트맵 보면서 진짜 신기했어. 색깔로 이렇게 많은 게 보이다니.' },
@@ -726,6 +739,7 @@ export const chapter14 = {
         text: '혼자 시계열 분석 예습',
         affectionChange: -1,
         xpChange: 6,
+        hintChange: 1,
         response: {
           male: [
             { speaker: 'narrator', text: '조용히 앉아 시계열 분석을 미리 찾아봤다.' },
@@ -741,6 +755,7 @@ export const chapter14 = {
         text: '팀장에게 리텐션 개선 전략 묻기',
         affectionChange: 0,
         xpChange: 7,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'seoyeon', expression: 'default', text: '리텐션 개선요? 분석이 끝이 아니라 실행이 끝이에요.' },
@@ -863,6 +878,7 @@ export const chapter15 = {
         text: '동기에게 말 걸기',
         affectionChange: 4,
         xpChange: 0,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'sohee', expression: 'default', text: '아 놀랐어~ 피곤해서 잠깐 멍했어.' },
@@ -878,6 +894,7 @@ export const chapter15 = {
         text: '묵묵히 각자 작업 마무리',
         affectionChange: 0,
         xpChange: 5,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'narrator', text: '서로 말없이 각자 화면을 바라보며 작업을 마쳤다.' },
@@ -893,6 +910,7 @@ export const chapter15 = {
         text: '팀장에게 내일 일정 확인',
         affectionChange: -1,
         xpChange: 4,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'seoyeon', expression: 'default', text: '내일은 Part 3 마지막. 분포와 이상값 챕터예요. 박스 플롯이랑 히스토그램 다룰 거예요.' },
@@ -1026,6 +1044,7 @@ export const chapter16 = {
         text: '동기 옆 자리',
         affectionChange: 5,
         xpChange: 0,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'sohee', expression: 'excited', text: '왔어!! 여기 와!! 오늘은 진짜 파트 3 완주 기념이야~!' },
@@ -1041,6 +1060,7 @@ export const chapter16 = {
         text: '팀 전체 건배',
         affectionChange: 0,
         xpChange: 8,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'seoyeon', expression: 'smile', text: 'Part 3까지 고생들 많았어요. 오늘은 쉬어요.' },
@@ -1056,6 +1076,7 @@ export const chapter16 = {
         text: '선배에게 Part 4 조언 듣기',
         affectionChange: 0,
         xpChange: 7,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'narrator', text: '선배에게 Part 4 대시보드 설계의 핵심을 들었다.' },

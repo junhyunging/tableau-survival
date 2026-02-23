@@ -121,6 +121,7 @@ export const chapter3 = {
         text: '동기와 같이 야근하며 추가 연습',
         affectionChange: 4,
         xpChange: 0,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'sohee', expression: 'excited', text: '정말? 나도 마침 더 해보고 싶었어!' },
@@ -138,6 +139,7 @@ export const chapter3 = {
         text: '집에서 혼자 복습하고 내일 적용',
         affectionChange: -1,
         xpChange: 5,
+        hintChange: 1,
         response: {
           male: [
             { speaker: 'narrator', text: '오늘 배운 내용을 노트로 정리하며 집에서 혼자 복습했다.' },
@@ -153,6 +155,7 @@ export const chapter3 = {
         text: '팀장에게 차트 피드백 요청',
         affectionChange: 0,
         xpChange: 8,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'seoyeon', expression: 'serious', text: '차트 피드백? 보여봐요.' },

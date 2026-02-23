@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react'
 import CodeMirror from '@uiw/react-codemirror'
 import { createTheme } from '@uiw/codemirror-themes'
 import { tags as t } from '@lezer/highlight'
-import { useGameDispatch } from '../../hooks/useGameState'
+import { useGameState, useGameDispatch } from '../../hooks/useGameState'
 import { validateSyntax, checkCalcAnswer, getPartialFeedback } from '../../utils/calcFieldValidator'
 import FieldReference from './FieldReference'
 import FunctionReference from './FunctionReference'
@@ -31,6 +31,7 @@ const tableauEditorTheme = createTheme({
 })
 
 export default function CalcFieldEditor({ problem, onComplete }) {
+  const state = useGameState()
   const dispatch = useGameDispatch()
   const [formula, setFormula] = useState('')
   const [syntaxIssues, setSyntaxIssues] = useState([])
@@ -162,9 +163,21 @@ export default function CalcFieldEditor({ problem, onComplete }) {
       )}
 
       {/* Buttons */}
-      <div className="flex gap-3 justify-end mt-3">
+      <div className="flex gap-3 justify-end items-center mt-3">
+        {!submitted && problem.hint && (
+          <span className="text-[12px] text-white/25 mr-1">💡 ×{state.hints}</span>
+        )}
         {!submitted && !showHint && problem.hint && (
-          <button onClick={() => setShowHint(true)} className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary cursor-pointer">💡 힌트</button>
+          <button
+            onClick={() => {
+              dispatch({ type: 'USE_HINT' })
+              setShowHint(true)
+            }}
+            disabled={state.hints <= 0}
+            className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-text-secondary"
+          >
+            {state.hints <= 0 ? '💡 힌트 없음' : '💡 힌트'}
+          </button>
         )}
         {!submitted && (
           <button onClick={handleSubmit} disabled={!formula.trim()}

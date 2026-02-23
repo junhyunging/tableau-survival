@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback, useEffect } from 'react'
 import { DndContext, DragOverlay, useSensor, useSensors, PointerSensor } from '@dnd-kit/core'
-import { useGameDispatch } from '../../hooks/useGameState'
+import { useGameState, useGameDispatch } from '../../hooks/useGameState'
 import { computeChartData } from '../../utils/chartRenderer'
 import { checkBlockAnswer, getBossReaction, getProgress } from '../../utils/blockDragChecker'
 import BlockPalette from './BlockPalette'
@@ -32,6 +32,7 @@ const MARK_PROPERTIES = [
 ]
 
 export default function BlockWorkspace({ problem, onComplete }) {
+  const state = useGameState()
   const dispatch = useGameDispatch()
   const [filledSlots, setFilledSlots] = useState({})
   const [activeDragBlock, setActiveDragBlock] = useState(null)
@@ -341,10 +342,20 @@ export default function BlockWorkspace({ problem, onComplete }) {
       )}
 
       {/* Action buttons */}
-      <div className="flex gap-2.5 justify-end mt-3">
+      <div className="flex gap-2.5 justify-end items-center mt-3">
+        {!submitted && problem.hint && (
+          <span className="text-[12px] text-white/25 mr-1">💡 ×{state.hints}</span>
+        )}
         {!submitted && !showHint && problem.hint && (
-          <button onClick={() => setShowHint(true)} className="text-[13px] text-white/30 hover:text-white/60 cursor-pointer transition-colors">
-            힌트 보기
+          <button
+            onClick={() => {
+              dispatch({ type: 'USE_HINT' })
+              setShowHint(true)
+            }}
+            disabled={state.hints <= 0}
+            className="text-[13px] text-white/30 hover:text-white/60 cursor-pointer transition-colors disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-white/30"
+          >
+            {state.hints <= 0 ? '힌트 없음' : '힌트 보기'}
           </button>
         )}
         {!submitted && (

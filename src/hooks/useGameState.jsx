@@ -36,6 +36,7 @@ const initialState = {
   unlockedTitles: ['수습 분석가'],
   pendingTitleUnlock: [],
   chapterStars: {},
+  hints: 5,
   hintUsedThisChapter: false,
   chapterCorrect: 0,
   chapterTotal: 0,
@@ -227,14 +228,16 @@ function gameReducer(state, action) {
     }
 
     case 'CHOICE_MADE': {
-      const { affectionChange = 0, xpChange = 0 } = action.payload
+      const { affectionChange = 0, xpChange = 0, hintChange = 0 } = action.payload
       const newAffection = Math.max(0, Math.min(100, state.affection + affectionChange))
       const newXP = Math.max(getXPForLevel(state.level), state.xp + xpChange)
+      const newHints = Math.max(0, state.hints + hintChange)
       return {
         ...state,
         affection: newAffection,
         xp: newXP,
         level: getLevelFromXP(newXP),
+        hints: newHints,
       }
     }
 
@@ -263,8 +266,9 @@ function gameReducer(state, action) {
         attemptCount: 0,
       }
 
-    case 'SHOW_HINT':
-      return { ...state, hintUsedThisChapter: true }
+    case 'USE_HINT':
+      if (state.hints <= 0) return state
+      return { ...state, hints: state.hints - 1, hintUsedThisChapter: true }
 
     case 'SET_STORY_INDEX':
       return { ...state, storyIndex: action.payload }

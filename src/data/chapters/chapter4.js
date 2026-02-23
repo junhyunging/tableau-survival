@@ -126,6 +126,7 @@ export const chapter4 = {
         text: '동기 옆에 앉기',
         affectionChange: 5,
         xpChange: 0,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'sohee', expression: 'excited', text: '어, 여기 와!! 자리 하나 비워뒀어~' },
@@ -143,6 +144,7 @@ export const chapter4 = {
         text: '박서연 팀장 옆에 앉기',
         affectionChange: -2,
         xpChange: 10,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'seoyeon', expression: 'default', text: '여기 앉을 거예요? 좋아요.' },
@@ -160,6 +162,7 @@ export const chapter4 = {
         text: '선배 옆에 앉아 실무 이야기 듣기',
         affectionChange: 0,
         xpChange: 8,
+        hintChange: 0,
         response: {
           male: [
             { speaker: 'narrator', text: '선배 분석가 옆에 앉아 실무 이야기를 들었다.' },

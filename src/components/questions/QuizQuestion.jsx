@@ -166,14 +166,21 @@ export default function QuizQuestion({ problem, onComplete }) {
 
           {/* Bottom actions */}
           <div className="px-7 pb-6 flex items-center justify-between">
-            <div>
+            <div className="flex items-center gap-3">
               {!submitted && !showHint && problem.hint && (
                 <button
-                  onClick={() => setShowHint(true)}
-                  className="text-[13px] text-white/30 hover:text-white/60 transition-colors cursor-pointer"
+                  onClick={() => {
+                    dispatch({ type: 'USE_HINT' })
+                    setShowHint(true)
+                  }}
+                  disabled={state.hints <= 0}
+                  className="text-[13px] text-white/30 hover:text-white/60 transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-white/30"
                 >
-                  힌트 보기
+                  {state.hints <= 0 ? '힌트 없음' : '힌트 보기'}
                 </button>
+              )}
+              {!submitted && problem.hint && (
+                <span className="text-[12px] text-white/25">💡 ×{state.hints}</span>
               )}
             </div>
             <div className="flex gap-2.5">
