@@ -28,3 +28,10 @@ dist-ssr
 .env.local
 .vercel
 .env*.local
+
+# Internal docs
+GAME_REDESIGN.md
+HANDOFF.md
+IMAGE_PROMPTS.md
+PROBLEMS_OVERVIEW.md
+notionimg/

@@ -9,11 +9,11 @@ export const quizProblems = [
     question: '다음 중 측정값(Measure)에 해당하는 필드를 모두 고르세요.',
     context: '슈퍼스토어 데이터셋을 분석하고 있습니다.',
     options: [
-      { id: 'a', text: '고객 이름 (Customer Name)', isCorrect: false },
-      { id: 'b', text: '매출액 (Sales)', isCorrect: true },
-      { id: 'c', text: '주문 날짜 (Order Date)', isCorrect: false },
-      { id: 'd', text: '수량 (Quantity)', isCorrect: true },
-      { id: 'e', text: '카테고리 (Category)', isCorrect: false },
+      { id: 'a', text: '고객 이름 (Customer Name)' },
+      { id: 'b', text: '매출액 (Sales)' },
+      { id: 'c', text: '주문 날짜 (Order Date)' },
+      { id: 'd', text: '수량 (Quantity)' },
+      { id: 'e', text: '카테고리 (Category)' },
     ],
     selectType: 'multiple',
     explanation:
@@ -31,10 +31,10 @@ export const quizProblems = [
     question: '차원(Dimension)의 주된 역할은 무엇인가요?',
     context: 'Tableau에서 데이터 필드의 역할에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '데이터를 분류하고 그룹화하는 기준', isCorrect: true },
-      { id: 'b', text: '숫자를 합산하여 총합을 계산', isCorrect: false },
-      { id: 'c', text: '차트의 색상을 변경', isCorrect: false },
-      { id: 'd', text: '데이터를 삭제하는 필터', isCorrect: false },
+      { id: 'a', text: '데이터를 분류하고 그룹화하는 기준' },
+      { id: 'b', text: '숫자를 합산하여 총합을 계산' },
+      { id: 'c', text: '차트의 색상을 변경' },
+      { id: 'd', text: '데이터를 삭제하는 필터' },
     ],
     selectType: 'single',
     explanation:
@@ -52,10 +52,10 @@ export const quizProblems = [
     question: 'Tableau에서 측정값 필드를 뷰에 놓으면 기본적으로 어떤 집계가 적용되나요?',
     context: '측정값의 기본 동작에 대한 질문입니다.',
     options: [
-      { id: 'a', text: 'SUM (합계)', isCorrect: true },
-      { id: 'b', text: 'AVG (평균)', isCorrect: false },
-      { id: 'c', text: 'COUNT (개수)', isCorrect: false },
-      { id: 'd', text: 'MIN (최솟값)', isCorrect: false },
+      { id: 'a', text: 'SUM (합계)' },
+      { id: 'b', text: 'AVG (평균)' },
+      { id: 'c', text: 'COUNT (개수)' },
+      { id: 'd', text: 'MIN (최솟값)' },
     ],
     selectType: 'single',
     explanation:
@@ -73,10 +73,10 @@ export const quizProblems = [
     question: 'Tableau에서 연속형(Continuous) 필드는 어떤 색상으로 표시되나요?',
     context: '연속형과 불연속형 필드의 시각적 구분에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '파란색', isCorrect: false },
-      { id: 'b', text: '초록색', isCorrect: true },
-      { id: 'c', text: '주황색', isCorrect: false },
-      { id: 'd', text: '보라색', isCorrect: false },
+      { id: 'a', text: '파란색' },
+      { id: 'b', text: '초록색' },
+      { id: 'c', text: '주황색' },
+      { id: 'd', text: '보라색' },
     ],
     selectType: 'single',
     explanation:
@@ -94,10 +94,10 @@ export const quizProblems = [
     question: '날짜 필드를 "연속형"으로 사용하면 축이 어떻게 동작하나요?',
     context: '연속형 날짜 축의 동작 특성에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '각 날짜가 독립된 카테고리로 분리됨', isCorrect: false },
-      { id: 'b', text: '끊기지 않는 연속적인 타임라인 축이 됨', isCorrect: true },
-      { id: 'c', text: '날짜가 자동으로 삭제됨', isCorrect: false },
-      { id: 'd', text: '모든 날짜가 같은 값으로 표시됨', isCorrect: false },
+      { id: 'a', text: '각 날짜가 독립된 카테고리로 분리됨' },
+      { id: 'b', text: '끊기지 않는 연속적인 타임라인 축이 됨' },
+      { id: 'c', text: '날짜가 자동으로 삭제됨' },
+      { id: 'd', text: '모든 날짜가 같은 값으로 표시됨' },
     ],
     selectType: 'single',
     explanation:
@@ -115,10 +115,10 @@ export const quizProblems = [
     question: 'Tableau에서 ABS(-500)의 결과는 무엇인가요?',
     context: '숫자 함수 ABS의 동작에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '-500', isCorrect: false },
-      { id: 'b', text: '500', isCorrect: true },
-      { id: 'c', text: '0', isCorrect: false },
-      { id: 'd', text: 'NULL', isCorrect: false },
+      { id: 'a', text: '-500' },
+      { id: 'b', text: '500' },
+      { id: 'c', text: '0' },
+      { id: 'd', text: 'NULL' },
     ],
     selectType: 'single',
     explanation:
@@ -136,10 +136,10 @@ export const quizProblems = [
     question: 'CSV를 연결했더니 [Sales]가 Abc(문자열)로 인식됩니다. 가장 먼저 해야 할 작업은?',
     context: '데이터 연결 직후 필드 타입 점검 상황입니다.',
     options: [
-      { id: 'a', text: '데이터 패널에서 [Sales] 데이터 유형을 숫자(Number)로 변경한다', isCorrect: true },
-      { id: 'b', text: '집계 방식을 AVG로 바꾸면 자동으로 해결된다', isCorrect: false },
-      { id: 'c', text: '차트 색상을 바꾸면 숫자로 자동 변환된다', isCorrect: false },
-      { id: 'd', text: '원본 파일을 삭제하고 다시 연결한다', isCorrect: false },
+      { id: 'a', text: '데이터 패널에서 [Sales] 데이터 유형을 숫자(Number)로 변경한다' },
+      { id: 'b', text: '집계 방식을 AVG로 바꾸면 자동으로 해결된다' },
+      { id: 'c', text: '차트 색상을 바꾸면 숫자로 자동 변환된다' },
+      { id: 'd', text: '원본 파일을 삭제하고 다시 연결한다' },
     ],
     selectType: 'single',
     explanation:
@@ -157,10 +157,10 @@ export const quizProblems = [
     question: '데이터 연결/정리 단계에서 올바른 설명을 모두 고르세요.',
     context: 'Part 1 마지막: 연결부터 정리까지 종합 점검합니다.',
     options: [
-      { id: 'a', text: '라이브 연결은 원본 DB 변경 시 새로고침하면 최신 데이터가 반영된다', isCorrect: true },
-      { id: 'b', text: '추출(Extract)은 데이터를 로컬 Hyper 파일로 저장해 성능을 높일 수 있다', isCorrect: true },
-      { id: 'c', text: '데이터 인터프리터는 복잡한 헤더/불필요한 행 정리에 도움을 준다', isCorrect: true },
-      { id: 'd', text: '필드 타입이 잘못 인식돼도 계산 정확도에는 영향이 없다', isCorrect: false },
+      { id: 'a', text: '라이브 연결은 원본 DB 변경 시 새로고침하면 최신 데이터가 반영된다' },
+      { id: 'b', text: '추출(Extract)은 데이터를 로컬 Hyper 파일로 저장해 성능을 높일 수 있다' },
+      { id: 'c', text: '데이터 인터프리터는 복잡한 헤더/불필요한 행 정리에 도움을 준다' },
+      { id: 'd', text: '필드 타입이 잘못 인식돼도 계산 정확도에는 영향이 없다' },
     ],
     selectType: 'multiple',
     explanation:
@@ -178,10 +178,10 @@ export const quizProblems = [
     question: 'Tableau에서 마크 카드의 "색상(Color)"에 차원 필드를 올리면 어떤 변화가 생기나요?',
     context: '마크 카드의 색상 슬롯에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '차트가 삭제됨', isCorrect: false },
-      { id: 'b', text: '각 카테고리마다 다른 색으로 구분되어 표시됨', isCorrect: true },
-      { id: 'c', text: '축이 자동으로 반전됨', isCorrect: false },
-      { id: 'd', text: '모든 마크가 회색으로 변함', isCorrect: false },
+      { id: 'a', text: '차트가 삭제됨' },
+      { id: 'b', text: '각 카테고리마다 다른 색으로 구분되어 표시됨' },
+      { id: 'c', text: '축이 자동으로 반전됨' },
+      { id: 'd', text: '모든 마크가 회색으로 변함' },
     ],
     selectType: 'single',
     explanation:
@@ -199,10 +199,10 @@ export const quizProblems = [
     question: '전체 대비 각 항목의 비율을 보여주기에 가장 적합한 차트는?',
     context: '차트 선택 기준에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '라인 차트 — 시간 흐름 표현에 적합', isCorrect: false },
-      { id: 'b', text: '막대 차트 — 카테고리 간 크기 비교에 적합', isCorrect: false },
-      { id: 'c', text: '파이 차트 — 전체 대비 비율 비교에 적합', isCorrect: true },
-      { id: 'd', text: '산점도 — 두 변수 간 관계 파악에 적합', isCorrect: false },
+      { id: 'a', text: '라인 차트 — 시간 흐름 표현에 적합' },
+      { id: 'b', text: '막대 차트 — 카테고리 간 크기 비교에 적합' },
+      { id: 'c', text: '파이 차트 — 전체 대비 비율 비교에 적합' },
+      { id: 'd', text: '산점도 — 두 변수 간 관계 파악에 적합' },
     ],
     selectType: 'single',
     explanation:
@@ -219,10 +219,10 @@ export const quizProblems = [
     question: '테이블 계산에서 "어드레싱(Addressing)"이란 무엇인가요?',
     context: '테이블 계산의 핵심 개념인 파티션과 어드레싱에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '계산이 진행되는 방향(가로/세로)', isCorrect: true },
-      { id: 'b', text: '데이터를 필터링하는 조건', isCorrect: false },
-      { id: 'c', text: '차트의 색상 설정', isCorrect: false },
-      { id: 'd', text: '데이터 소스의 주소', isCorrect: false },
+      { id: 'a', text: '계산이 진행되는 방향(가로/세로)' },
+      { id: 'b', text: '데이터를 필터링하는 조건' },
+      { id: 'c', text: '차트의 색상 설정' },
+      { id: 'd', text: '데이터 소스의 주소' },
     ],
     selectType: 'single',
     explanation:
@@ -239,10 +239,10 @@ export const quizProblems = [
     question: 'LOD 표현식 {FIXED [Region] : SUM([Sales])}는 무엇을 계산하나요?',
     context: 'LOD(Level of Detail) 표현식의 FIXED 키워드에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '뷰의 집계 레벨과 관계없이 지역별 매출 합계를 구한다', isCorrect: true },
-      { id: 'b', text: '현재 뷰에 지역 필터를 적용한다', isCorrect: false },
-      { id: 'c', text: '지역 필드를 고정하여 정렬한다', isCorrect: false },
-      { id: 'd', text: '지역별 매출의 평균을 구한다', isCorrect: false },
+      { id: 'a', text: '뷰의 집계 레벨과 관계없이 지역별 매출 합계를 구한다' },
+      { id: 'b', text: '현재 뷰에 지역 필터를 적용한다' },
+      { id: 'c', text: '지역 필드를 고정하여 정렬한다' },
+      { id: 'd', text: '지역별 매출의 평균을 구한다' },
     ],
     selectType: 'single',
     explanation:
@@ -259,10 +259,10 @@ export const quizProblems = [
     question: 'KPI 대시보드에서 BANs(Big Ass Numbers)의 역할은 무엇인가요?',
     context: 'KPI 대시보드 설계의 핵심 구성요소에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '핵심 지표를 크고 명확한 숫자로 즉시 파악하게 한다', isCorrect: true },
-      { id: 'b', text: '데이터의 세부 내역을 상세하게 나열한다', isCorrect: false },
-      { id: 'c', text: '차트의 배경색을 설정한다', isCorrect: false },
-      { id: 'd', text: '데이터를 자동으로 필터링한다', isCorrect: false },
+      { id: 'a', text: '핵심 지표를 크고 명확한 숫자로 즉시 파악하게 한다' },
+      { id: 'b', text: '데이터의 세부 내역을 상세하게 나열한다' },
+      { id: 'c', text: '차트의 배경색을 설정한다' },
+      { id: 'd', text: '데이터를 자동으로 필터링한다' },
     ],
     selectType: 'single',
     explanation:
@@ -278,10 +278,10 @@ export const quizProblems = [
     question: '최종 프로젝트 대시보드 제출 전 체크리스트로 가장 적절한 것은?',
     context: 'Ch.20 최종 점검 상황입니다.',
     options: [
-      { id: 'a', text: 'KPI·트렌드·세그먼트 뷰를 액션으로 연결하고 하나의 스토리 흐름으로 검토한다', isCorrect: true },
-      { id: 'b', text: '차트 수를 최대한 늘려 정보량을 먼저 높인다', isCorrect: false },
-      { id: 'c', text: '색상 팔레트만 맞추고 분석 논리는 나중에 수정한다', isCorrect: false },
-      { id: 'd', text: '인터랙션 없이 스크린샷이 보기 좋으면 충분하다', isCorrect: false },
+      { id: 'a', text: 'KPI·트렌드·세그먼트 뷰를 액션으로 연결하고 하나의 스토리 흐름으로 검토한다' },
+      { id: 'b', text: '차트 수를 최대한 늘려 정보량을 먼저 높인다' },
+      { id: 'c', text: '색상 팔레트만 맞추고 분석 논리는 나중에 수정한다' },
+      { id: 'd', text: '인터랙션 없이 스크린샷이 보기 좋으면 충분하다' },
     ],
     selectType: 'single',
     explanation:
@@ -298,10 +298,10 @@ export const quizProblems = [
     question: '퍼널 분석에서 "전환율(Conversion Rate)"의 올바른 계산법은?',
     context: '쇼핑몰 구매 퍼널에서 전환율을 계산하는 방법에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '다음 단계 사용자 수 / 현재 단계 사용자 수', isCorrect: true },
-      { id: 'b', text: '현재 단계 사용자 수 / 전체 사용자 수', isCorrect: false },
-      { id: 'c', text: '이탈 사용자 수 / 전체 사용자 수', isCorrect: false },
-      { id: 'd', text: '전체 사용자 수 / 현재 단계 사용자 수', isCorrect: false },
+      { id: 'a', text: '다음 단계 사용자 수 / 현재 단계 사용자 수' },
+      { id: 'b', text: '현재 단계 사용자 수 / 전체 사용자 수' },
+      { id: 'c', text: '이탈 사용자 수 / 전체 사용자 수' },
+      { id: 'd', text: '전체 사용자 수 / 현재 단계 사용자 수' },
     ],
     selectType: 'single',
     explanation:
@@ -317,10 +317,10 @@ export const quizProblems = [
     question: '퍼널 차트에서 이탈이 가장 큰 구간을 찾았을 때 다음 행동으로 가장 적절한 것은?',
     context: '퍼널 분석 결과의 활용에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '해당 구간의 사용자 경험을 분석하여 개선점을 찾는다', isCorrect: true },
-      { id: 'b', text: '해당 구간을 퍼널에서 제거한다', isCorrect: false },
-      { id: 'c', text: '모든 구간의 목표를 동일하게 설정한다', isCorrect: false },
-      { id: 'd', text: '데이터를 다시 수집한다', isCorrect: false },
+      { id: 'a', text: '해당 구간의 사용자 경험을 분석하여 개선점을 찾는다' },
+      { id: 'b', text: '해당 구간을 퍼널에서 제거한다' },
+      { id: 'c', text: '모든 구간의 목표를 동일하게 설정한다' },
+      { id: 'd', text: '데이터를 다시 수집한다' },
     ],
     selectType: 'single',
     explanation:
@@ -337,10 +337,10 @@ export const quizProblems = [
     question: '파레토 차트에서 이중 축(Dual Axis)을 사용하는 이유는?',
     context: '파레토 분석의 시각화 기법에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '막대(개별 값)와 라인(누적 비율)을 하나의 차트에 동시에 표현하기 위해', isCorrect: true },
-      { id: 'b', text: '차트를 두 배로 크게 만들기 위해', isCorrect: false },
-      { id: 'c', text: '두 개의 필터를 동시에 적용하기 위해', isCorrect: false },
-      { id: 'd', text: '데이터를 두 번 집계하기 위해', isCorrect: false },
+      { id: 'a', text: '막대(개별 값)와 라인(누적 비율)을 하나의 차트에 동시에 표현하기 위해' },
+      { id: 'b', text: '차트를 두 배로 크게 만들기 위해' },
+      { id: 'c', text: '두 개의 필터를 동시에 적용하기 위해' },
+      { id: 'd', text: '데이터를 두 번 집계하기 위해' },
     ],
     selectType: 'single',
     explanation:
@@ -357,10 +357,10 @@ export const quizProblems = [
     question: 'RFM 분석에서 Recency가 높고(최근 구매), Frequency가 높고(자주 구매), Monetary가 높은(많이 구매) 고객은 어떤 세그먼트에 해당하나요?',
     context: 'RFM 기반 고객 분류에 대한 질문입니다.',
     options: [
-      { id: 'a', text: 'VIP (최우수 고객)', isCorrect: true },
-      { id: 'b', text: '이탈 위험 고객', isCorrect: false },
-      { id: 'c', text: '신규 고객', isCorrect: false },
-      { id: 'd', text: '휴면 고객', isCorrect: false },
+      { id: 'a', text: 'VIP (최우수 고객)' },
+      { id: 'b', text: '이탈 위험 고객' },
+      { id: 'c', text: '신규 고객' },
+      { id: 'd', text: '휴면 고객' },
     ],
     selectType: 'single',
     explanation:
@@ -377,10 +377,10 @@ export const quizProblems = [
     question: '코호트 분석 히트맵에서 "색이 점점 옅어지는 패턴"은 무엇을 의미하나요?',
     context: '코호트 리텐션 히트맵 해석에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '시간이 지남에 따라 리텐션(유지율)이 감소하고 있다', isCorrect: true },
-      { id: 'b', text: '매출이 증가하고 있다', isCorrect: false },
-      { id: 'c', text: '신규 고객이 늘어나고 있다', isCorrect: false },
-      { id: 'd', text: '데이터가 부족하다', isCorrect: false },
+      { id: 'a', text: '시간이 지남에 따라 리텐션(유지율)이 감소하고 있다' },
+      { id: 'b', text: '매출이 증가하고 있다' },
+      { id: 'c', text: '신규 고객이 늘어나고 있다' },
+      { id: 'd', text: '데이터가 부족하다' },
     ],
     selectType: 'single',
     explanation:
@@ -397,10 +397,10 @@ export const quizProblems = [
     question: '이동평균(Moving Average)을 사용하는 주된 목적은?',
     context: '시계열 분석에서 이동평균의 역할에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '단기 변동(노이즈)을 줄이고 전체적인 추세를 부드럽게 보여준다', isCorrect: true },
-      { id: 'b', text: '미래 데이터를 정확하게 예측한다', isCorrect: false },
-      { id: 'c', text: '데이터의 이상값을 삭제한다', isCorrect: false },
-      { id: 'd', text: '차트의 축 범위를 자동 조정한다', isCorrect: false },
+      { id: 'a', text: '단기 변동(노이즈)을 줄이고 전체적인 추세를 부드럽게 보여준다' },
+      { id: 'b', text: '미래 데이터를 정확하게 예측한다' },
+      { id: 'c', text: '데이터의 이상값을 삭제한다' },
+      { id: 'd', text: '차트의 축 범위를 자동 조정한다' },
     ],
     selectType: 'single',
     explanation:
@@ -416,10 +416,10 @@ export const quizProblems = [
     question: 'Tableau 예측 기능에서 "신뢰 구간(Confidence Interval)"이 넓어지는 것은 무엇을 의미하나요?',
     context: 'Tableau 내장 예측 기능의 해석에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '미래로 갈수록 예측의 불확실성이 커진다', isCorrect: true },
-      { id: 'b', text: '매출이 확실히 증가할 것이다', isCorrect: false },
-      { id: 'c', text: '데이터의 품질이 좋다', isCorrect: false },
-      { id: 'd', text: '과거 데이터가 안정적이다', isCorrect: false },
+      { id: 'a', text: '미래로 갈수록 예측의 불확실성이 커진다' },
+      { id: 'b', text: '매출이 확실히 증가할 것이다' },
+      { id: 'c', text: '데이터의 품질이 좋다' },
+      { id: 'd', text: '과거 데이터가 안정적이다' },
     ],
     selectType: 'single',
     explanation:
@@ -436,10 +436,10 @@ export const quizProblems = [
     question: '박스 플롯에서 "수염(Whisker)" 바깥에 있는 점은 무엇을 의미하나요?',
     context: '박스 플롯의 구성요소와 이상값 판별에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '이상값(Outlier) — 일반적인 분포 범위를 벗어난 데이터', isCorrect: true },
-      { id: 'b', text: '평균값', isCorrect: false },
-      { id: 'c', text: '최빈값', isCorrect: false },
-      { id: 'd', text: '결측값', isCorrect: false },
+      { id: 'a', text: '이상값(Outlier) — 일반적인 분포 범위를 벗어난 데이터' },
+      { id: 'b', text: '평균값' },
+      { id: 'c', text: '최빈값' },
+      { id: 'd', text: '결측값' },
     ],
     selectType: 'single',
     explanation:
@@ -455,10 +455,10 @@ export const quizProblems = [
     question: '다음 중 데이터 분포를 파악하기에 가장 적합한 시각화를 모두 고르세요.',
     context: '분포 분석에 적합한 시각화 선택에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '히스토그램 — 빈도 분포 파악', isCorrect: true },
-      { id: 'b', text: '박스 플롯 — 중앙값, 사분위수, 이상값 파악', isCorrect: true },
-      { id: 'c', text: '파이 차트 — 비율 비교', isCorrect: false },
-      { id: 'd', text: '산점도 — 두 변수 간 관계와 이상값 파악', isCorrect: true },
+      { id: 'a', text: '히스토그램 — 빈도 분포 파악' },
+      { id: 'b', text: '박스 플롯 — 중앙값, 사분위수, 이상값 파악' },
+      { id: 'c', text: '파이 차트 — 비율 비교' },
+      { id: 'd', text: '산점도 — 두 변수 간 관계와 이상값 파악' },
     ],
     selectType: 'multiple',
     explanation:
@@ -475,10 +475,10 @@ export const quizProblems = [
     question: '대시보드 설계에서 "Z자 동선"이란 무엇인가요?',
     context: '대시보드 레이아웃 설계 원칙에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '사용자의 시선이 좌상단 → 우상단 → 좌하단 → 우하단으로 이동하는 자연스러운 패턴', isCorrect: true },
-      { id: 'b', text: '차트를 Z자 모양으로 배치하는 기법', isCorrect: false },
-      { id: 'c', text: '데이터를 지그재그로 정렬하는 방법', isCorrect: false },
-      { id: 'd', text: '필터를 Z자 순서로 적용하는 방법', isCorrect: false },
+      { id: 'a', text: '사용자의 시선이 좌상단 → 우상단 → 좌하단 → 우하단으로 이동하는 자연스러운 패턴' },
+      { id: 'b', text: '차트를 Z자 모양으로 배치하는 기법' },
+      { id: 'c', text: '데이터를 지그재그로 정렬하는 방법' },
+      { id: 'd', text: '필터를 Z자 순서로 적용하는 방법' },
     ],
     selectType: 'single',
     explanation:
@@ -494,10 +494,10 @@ export const quizProblems = [
     question: '좋은 대시보드 설계를 위해 가장 먼저 해야 할 것은?',
     context: '대시보드 설계 프로세스에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '"누구에게, 무엇을 보여줄 것인가"를 정의하고 와이어프레임을 그린다', isCorrect: true },
-      { id: 'b', text: '바로 Tableau를 열고 차트를 만들기 시작한다', isCorrect: false },
-      { id: 'c', text: '가능한 많은 차트를 추가한다', isCorrect: false },
-      { id: 'd', text: '색상 팔레트를 먼저 선택한다', isCorrect: false },
+      { id: 'a', text: '"누구에게, 무엇을 보여줄 것인가"를 정의하고 와이어프레임을 그린다' },
+      { id: 'b', text: '바로 Tableau를 열고 차트를 만들기 시작한다' },
+      { id: 'c', text: '가능한 많은 차트를 추가한다' },
+      { id: 'd', text: '색상 팔레트를 먼저 선택한다' },
     ],
     selectType: 'single',
     explanation:
@@ -514,10 +514,10 @@ export const quizProblems = [
     question: '대시보드에서 "필터 액션"의 동작 방식은?',
     context: '대시보드 액션의 종류와 동작에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '소스 시트에서 마크를 선택하면 타겟 시트의 데이터가 필터링된다', isCorrect: true },
-      { id: 'b', text: '모든 시트의 색상이 변경된다', isCorrect: false },
-      { id: 'c', text: '선택한 마크가 삭제된다', isCorrect: false },
-      { id: 'd', text: '새 브라우저 탭이 열린다', isCorrect: false },
+      { id: 'a', text: '소스 시트에서 마크를 선택하면 타겟 시트의 데이터가 필터링된다' },
+      { id: 'b', text: '모든 시트의 색상이 변경된다' },
+      { id: 'c', text: '선택한 마크가 삭제된다' },
+      { id: 'd', text: '새 브라우저 탭이 열린다' },
     ],
     selectType: 'single',
     explanation:
@@ -533,10 +533,10 @@ export const quizProblems = [
     question: '다음 중 올바른 액션 설명을 모두 고르세요.',
     context: '대시보드 액션 유형의 차이를 이해하는 종합 질문입니다.',
     options: [
-      { id: 'a', text: '필터 액션: 선택한 값으로 다른 시트를 필터링', isCorrect: true },
-      { id: 'b', text: '하이라이트 액션: 관련 마크만 강조, 나머지는 흐리게', isCorrect: true },
-      { id: 'c', text: 'URL 액션: 마크 클릭 시 웹페이지로 이동', isCorrect: true },
-      { id: 'd', text: '매개변수 액션: 데이터 소스를 자동 변경', isCorrect: false },
+      { id: 'a', text: '필터 액션: 선택한 값으로 다른 시트를 필터링' },
+      { id: 'b', text: '하이라이트 액션: 관련 마크만 강조, 나머지는 흐리게' },
+      { id: 'c', text: 'URL 액션: 마크 클릭 시 웹페이지로 이동' },
+      { id: 'd', text: '매개변수 액션: 데이터 소스를 자동 변경' },
     ],
     selectType: 'multiple',
     explanation:
@@ -553,10 +553,10 @@ export const quizProblems = [
     question: '데이터 스토리텔링의 효과적인 3단계 구조는?',
     context: '데이터 기반 보고에서의 스토리텔링 프레임워크에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '상황(Context) → 갈등(Complication) → 해결(Resolution)', isCorrect: true },
-      { id: 'b', text: '데이터 수집 → 차트 생성 → 색상 적용', isCorrect: false },
-      { id: 'c', text: '제목 작성 → 그래프 삽입 → 각주 추가', isCorrect: false },
-      { id: 'd', text: '질문 → 가설 → 실험', isCorrect: false },
+      { id: 'a', text: '상황(Context) → 갈등(Complication) → 해결(Resolution)' },
+      { id: 'b', text: '데이터 수집 → 차트 생성 → 색상 적용' },
+      { id: 'c', text: '제목 작성 → 그래프 삽입 → 각주 추가' },
+      { id: 'd', text: '질문 → 가설 → 실험' },
     ],
     selectType: 'single',
     explanation:
@@ -572,10 +572,10 @@ export const quizProblems = [
     question: 'Tableau의 Story Point 기능은 무엇에 활용되나요?',
     context: 'Tableau Story Point 기능의 용도에 대한 질문입니다.',
     options: [
-      { id: 'a', text: '여러 뷰를 슬라이드처럼 연결하여 분석 흐름을 프레젠테이션으로 구성', isCorrect: true },
-      { id: 'b', text: '차트에 애니메이션 효과를 추가', isCorrect: false },
-      { id: 'c', text: '데이터에 점수(Score)를 부여', isCorrect: false },
-      { id: 'd', text: '북마크처럼 뷰를 저장', isCorrect: false },
+      { id: 'a', text: '여러 뷰를 슬라이드처럼 연결하여 분석 흐름을 프레젠테이션으로 구성' },
+      { id: 'b', text: '차트에 애니메이션 효과를 추가' },
+      { id: 'c', text: '데이터에 점수(Score)를 부여' },
+      { id: 'd', text: '북마크처럼 뷰를 저장' },
     ],
     selectType: 'single',
     explanation:
@@ -592,10 +592,10 @@ export const quizProblems = [
     question: '종합 대시보드 설계 시 다음 중 올바른 원칙을 모두 고르세요.',
     context: '20챕터를 통해 배운 모든 내용의 종합 점검입니다.',
     options: [
-      { id: 'a', text: '핵심 인사이트를 먼저 보여주고 세부 사항은 드릴다운으로 제공', isCorrect: true },
-      { id: 'b', text: '가능한 많은 차트를 한 화면에 넣어 정보량을 극대화', isCorrect: false },
-      { id: 'c', text: '액션으로 사용자가 스스로 탐색할 수 있는 경험을 제공', isCorrect: true },
-      { id: 'd', text: '스토리 흐름 없이 차트만 나열해도 충분', isCorrect: false },
+      { id: 'a', text: '핵심 인사이트를 먼저 보여주고 세부 사항은 드릴다운으로 제공' },
+      { id: 'b', text: '가능한 많은 차트를 한 화면에 넣어 정보량을 극대화' },
+      { id: 'c', text: '액션으로 사용자가 스스로 탐색할 수 있는 경험을 제공' },
+      { id: 'd', text: '스토리 흐름 없이 차트만 나열해도 충분' },
     ],
     selectType: 'multiple',
     explanation:

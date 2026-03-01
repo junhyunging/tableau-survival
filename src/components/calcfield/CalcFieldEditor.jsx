@@ -7,6 +7,7 @@ import { validateSyntax, checkCalcAnswer, getPartialFeedback } from '../../utils
 import FieldReference from './FieldReference'
 import FunctionReference from './FunctionReference'
 import { EXPRESSION_EMOJI } from '../story/VisualNovel'
+import { getCalcAnswers } from '../../data/problems/answerLoader'
 
 const tableauEditorTheme = createTheme({
   theme: 'dark',
@@ -40,6 +41,7 @@ export default function CalcFieldEditor({ problem, onComplete }) {
   const [feedback, setFeedback] = useState('')
   const [showHint, setShowHint] = useState(false)
   const [showSample, setShowSample] = useState(false)
+  const { correctPatterns, sampleAnswer, partialFeedback } = getCalcAnswers(problem.id)
 
   const handleChange = useCallback((value) => {
     setFormula(value)
@@ -52,7 +54,7 @@ export default function CalcFieldEditor({ problem, onComplete }) {
 
   const handleSubmit = () => {
     if (!formula.trim()) return
-    const result = checkCalcAnswer(formula, problem.correctPatterns)
+    const result = checkCalcAnswer(formula, correctPatterns)
     setIsCorrect(result.isCorrect)
     setSubmitted(true)
     if (result.isCorrect) {
@@ -60,7 +62,7 @@ export default function CalcFieldEditor({ problem, onComplete }) {
       setFeedback('정답입니다!')
     } else {
       dispatch({ type: 'ANSWER_INCORRECT', payload: { problemId: problem.id } })
-      setFeedback(getPartialFeedback(formula, problem.partialFeedback) || '다시 확인해보세요.')
+      setFeedback(getPartialFeedback(formula, partialFeedback) || '다시 확인해보세요.')
     }
   }
 
@@ -147,7 +149,7 @@ export default function CalcFieldEditor({ problem, onComplete }) {
           </button>
           {showSample && (
             <pre className="mt-1 p-3 bg-bg-card rounded-lg text-[12px] text-gauge-high font-mono whitespace-pre-wrap border border-white/5">
-              {problem.sampleAnswer}
+              {sampleAnswer}
             </pre>
           )}
         </div>

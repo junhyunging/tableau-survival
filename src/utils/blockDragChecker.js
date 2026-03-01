@@ -1,3 +1,5 @@
+import { getBlockAnswers } from '../data/problems/answerLoader'
+
 // Normalize chartType: "auto" is treated as "bar" for matching
 function normalizeSlot(slotId, value) {
   if (slotId === 'chartType' && value === 'auto') return 'bar'
@@ -5,7 +7,8 @@ function normalizeSlot(slotId, value) {
 }
 
 export function checkBlockAnswer(problem, blockState) {
-  const answers = [problem.correctAnswer, ...(problem.alternativeAnswers || [])]
+  const { correctAnswer, alternativeAnswers } = getBlockAnswers(problem.id)
+  const answers = [correctAnswer, ...(alternativeAnswers || [])]
 
   for (const answer of answers) {
     const match = Object.keys(answer).every((slotId) => {
@@ -19,7 +22,7 @@ export function checkBlockAnswer(problem, blockState) {
 }
 
 export function getProgress(problem, blockState) {
-  const answer = problem.correctAnswer
+  const { correctAnswer: answer } = getBlockAnswers(problem.id)
   const keys = Object.keys(answer).filter((k) => answer[k] != null && k !== 'aggregation')
   const total = keys.length
   const matched = keys.filter((k) => normalizeSlot(k, blockState[k]) === answer[k]).length

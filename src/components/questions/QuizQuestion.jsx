@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useGameState, useGameDispatch } from '../../hooks/useGameState'
 import { checkQuizAnswer } from '../../utils/quizChecker'
 import { EXPRESSION_EMOJI } from '../story/VisualNovel'
+import { getQuizAnswers } from '../../data/problems/answerLoader'
 
 export default function QuizQuestion({ problem, onComplete }) {
   const state = useGameState()
@@ -10,6 +11,7 @@ export default function QuizQuestion({ problem, onComplete }) {
   const [submitted, setSubmitted] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
   const [showHint, setShowHint] = useState(false)
+  const correctOptionIds = getQuizAnswers(problem.id)
 
   const handleSelect = (optionId) => {
     if (submitted) return
@@ -99,11 +101,11 @@ export default function QuizQuestion({ problem, onComplete }) {
               let labelColor = 'text-white/75'
 
               if (submitted) {
-                if (option.isCorrect) {
+                if (correctOptionIds.includes(option.id)) {
                   cardBg = 'bg-emerald-500/[0.08] border-emerald-400/30'
                   indicatorStyle = 'border-emerald-400 bg-emerald-500 text-white'
                   labelColor = 'text-emerald-300'
-                } else if (isSelected && !option.isCorrect) {
+                } else if (isSelected && !correctOptionIds.includes(option.id)) {
                   cardBg = 'bg-red-500/[0.08] border-red-400/30'
                   indicatorStyle = 'border-red-400 bg-red-500 text-white'
                   labelColor = 'text-red-300'
@@ -128,7 +130,7 @@ export default function QuizQuestion({ problem, onComplete }) {
                   <div className="flex items-center gap-4">
                     <span className={`w-7 h-7 rounded-lg border-2 flex items-center justify-center text-[11px] font-bold shrink-0 transition-all duration-200 ${indicatorStyle}`}>
                       {submitted
-                        ? (option.isCorrect ? '✓' : isSelected ? '✗' : '')
+                        ? (correctOptionIds.includes(option.id) ? '✓' : isSelected ? '✗' : '')
                         : (isSelected ? '●' : String.fromCharCode(65 + idx))}
                     </span>
                     <span className={`text-[15px] leading-relaxed transition-colors ${labelColor}`}>
